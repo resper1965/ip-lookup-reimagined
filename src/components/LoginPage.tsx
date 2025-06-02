@@ -1,0 +1,120 @@
+
+import { useState } from 'react';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { useAuth } from '@/contexts/AuthContext';
+import { useToast } from '@/hooks/use-toast';
+
+const LoginPage = () => {
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
+  const { login } = useAuth();
+  const { toast } = useToast();
+
+  const handleLogin = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsLoading(true);
+
+    // Simular delay de autenticação
+    await new Promise(resolve => setTimeout(resolve, 1000));
+
+    const success = login(username, password);
+    
+    if (success) {
+      toast({
+        title: "Login realizado com sucesso!",
+        description: "Bem-vindo ao painel administrativo.",
+      });
+    } else {
+      toast({
+        title: "Erro de autenticação",
+        description: "Usuário ou senha incorretos.",
+        variant: "destructive",
+      });
+    }
+    
+    setIsLoading(false);
+  };
+
+  return (
+    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 relative overflow-hidden flex items-center justify-center">
+      {/* Background decorative elements */}
+      <div className="absolute inset-0 overflow-hidden">
+        <div className="absolute -top-40 -right-40 w-96 h-96 bg-blue-500/20 rounded-full blur-3xl animate-pulse"></div>
+        <div className="absolute -bottom-40 -left-40 w-96 h-96 bg-purple-500/20 rounded-full blur-3xl animate-pulse"></div>
+        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-pink-500/10 rounded-full blur-3xl animate-pulse"></div>
+        
+        {/* Grid pattern */}
+        <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.01)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.01)_1px,transparent_1px)] bg-[size:50px_50px]"></div>
+      </div>
+
+      {/* Language selector */}
+      <div className="absolute top-6 right-6">
+        <select className="bg-cyan-400 text-gray-900 px-4 py-2 rounded-lg text-sm font-medium">
+          <option value="pt">Português</option>
+          <option value="en">English</option>
+        </select>
+      </div>
+
+      {/* Login card */}
+      <div className="relative z-10 w-full max-w-md mx-4">
+        <div className="bg-gray-800/80 backdrop-blur-sm rounded-2xl p-8 border border-gray-700/50 shadow-2xl">
+          {/* Logo */}
+          <div className="text-center mb-8">
+            <h1 className="text-3xl font-bold text-white mb-2">
+              nCommand<span className="text-cyan-400 text-sm align-super">+</span>
+            </h1>
+            <p className="text-gray-400 text-sm">Lite</p>
+          </div>
+
+          {/* Login form */}
+          <form onSubmit={handleLogin} className="space-y-6">
+            <div>
+              <Input
+                type="text"
+                placeholder="pentestAdmin"
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
+                className="w-full bg-gray-200 border-0 text-gray-900 placeholder-gray-600 rounded-lg px-4 py-3 text-base"
+                required
+              />
+            </div>
+
+            <div>
+              <Input
+                type="password"
+                placeholder="••••••••"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                className="w-full bg-gray-200 border-0 text-gray-900 placeholder-gray-600 rounded-lg px-4 py-3 text-base"
+                required
+              />
+            </div>
+
+            <Button
+              type="submit"
+              disabled={isLoading}
+              className="w-full bg-cyan-400 hover:bg-cyan-500 text-gray-900 font-medium py-3 rounded-lg text-base transition-colors"
+            >
+              {isLoading ? 'Entrando...' : 'Login'}
+            </Button>
+
+            <div className="text-center">
+              <a href="#" className="text-cyan-400 hover:text-cyan-300 text-sm transition-colors">
+                Esqueceu sua senha?
+              </a>
+            </div>
+          </form>
+        </div>
+
+        {/* Hint */}
+        <div className="text-center mt-6 text-gray-400 text-sm">
+          <p>Usuário: pentestAdmin | Senha: admin123</p>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default LoginPage;

@@ -1,15 +1,30 @@
 
 import { useState } from "react";
+import { AuthProvider, useAuth } from "@/contexts/AuthContext";
 import Navigation from "@/components/Navigation";
 import IPInfos from "@/components/IPInfos";
 import ConnectivityTest from "@/components/ConnectivityTest";
 import WebRTCTest from "@/components/WebRTCTest";
 import DNSLeakTest from "@/components/DNSLeakTest";
 import SpeedTest from "@/components/SpeedTest";
-import AdvancedTools from "@/components/AdvancedTools";
+import AdvancedToolsImplemented from "@/components/AdvancedToolsImplemented";
+import LoginPage from "@/components/LoginPage";
+import AdminPanel from "@/components/AdminPanel";
+import { Button } from "@/components/ui/button";
+import { Settings } from "lucide-react";
 
-const Index = () => {
+const AppContent = () => {
+  const { isAuthenticated } = useAuth();
   const [activeTab, setActiveTab] = useState('ip-infos');
+  const [showAdminPanel, setShowAdminPanel] = useState(false);
+
+  if (!isAuthenticated) {
+    return <LoginPage />;
+  }
+
+  if (showAdminPanel) {
+    return <AdminPanel />;
+  }
 
   const renderContent = () => {
     switch (activeTab) {
@@ -24,7 +39,7 @@ const Index = () => {
       case 'speed-test':
         return <SpeedTest />;
       case 'advanced':
-        return <AdvancedTools />;
+        return <AdvancedToolsImplemented />;
       default:
         return <IPInfos />;
     }
@@ -43,7 +58,17 @@ const Index = () => {
       </div>
       
       <div className="relative z-10">
-        <Navigation activeTab={activeTab} onTabChange={setActiveTab} />
+        <div className="flex items-center justify-between">
+          <Navigation activeTab={activeTab} onTabChange={setActiveTab} />
+          <Button
+            onClick={() => setShowAdminPanel(true)}
+            variant="ghost"
+            size="sm"
+            className="absolute top-4 right-4 text-white hover:bg-white/10 z-50"
+          >
+            <Settings className="w-4 h-4" />
+          </Button>
+        </div>
         
         <div className="container mx-auto px-4 py-12">
           {renderContent()}
@@ -55,6 +80,14 @@ const Index = () => {
         </footer>
       </div>
     </div>
+  );
+};
+
+const Index = () => {
+  return (
+    <AuthProvider>
+      <AppContent />
+    </AuthProvider>
   );
 };
 
