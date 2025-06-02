@@ -18,7 +18,7 @@ const Navigation = ({ activeTab, onTabChange }: NavigationProps) => {
   ];
 
   return (
-    <nav className="bg-white/5 backdrop-blur-sm border-b border-white/10 sticky top-0 z-50">
+    <nav className="bg-white/5 backdrop-blur-sm border-b border-white/10 sticky top-0 z-50 font-montserrat">
       <div className="container mx-auto px-4">
         <div className="flex items-center justify-center space-x-1 py-3 overflow-x-auto">
           {tabs.map((tab) => {
@@ -27,9 +27,9 @@ const Navigation = ({ activeTab, onTabChange }: NavigationProps) => {
               <button
                 key={tab.id}
                 onClick={() => onTabChange(tab.id)}
-                className={`flex items-center space-x-2 px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 whitespace-nowrap ${
+                className={`flex items-center space-x-2 px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 whitespace-nowrap font-montserrat ${
                   activeTab === tab.id
-                    ? 'bg-blue-500/20 text-blue-200 border border-blue-400/30'
+                    ? 'bg-brand-cyan/20 text-brand-cyan border border-brand-cyan/30'
                     : 'text-gray-300 hover:bg-white/10 hover:text-white'
                 }`}
               >

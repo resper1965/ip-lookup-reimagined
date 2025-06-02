@@ -1,3 +1,4 @@
+
 import type { Config } from "tailwindcss";
 
 export default {
@@ -18,7 +19,15 @@ export default {
 			}
 		},
 		extend: {
+			fontFamily: {
+				'montserrat': ['Montserrat', 'sans-serif'],
+				'sans': ['Montserrat', 'sans-serif'],
+			},
 			colors: {
+				brand: {
+					primary: '#00ade0',
+					cyan: '#00ade0',
+				},
 				border: 'hsl(var(--border))',
 				input: 'hsl(var(--input))',
 				ring: 'hsl(var(--ring))',
