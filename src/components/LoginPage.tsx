@@ -4,8 +4,13 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { useAuth } from '@/contexts/AuthContext';
 import { useToast } from '@/hooks/use-toast';
+import { ArrowLeft } from 'lucide-react';
 
-const LoginPage = () => {
+interface LoginPageProps {
+  onBackToApp?: () => void;
+}
+
+const LoginPage = ({ onBackToApp }: LoginPageProps) => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [isLoading, setIsLoading] = useState(false);
@@ -37,6 +42,15 @@ const LoginPage = () => {
     setIsLoading(false);
   };
 
+  const handleBackToApp = () => {
+    if (onBackToApp) {
+      onBackToApp();
+    } else {
+      // Recarregar a página para voltar à aplicação principal
+      window.location.reload();
+    }
+  };
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-900 via-slate-900 to-gray-800 relative overflow-hidden flex items-center justify-center font-montserrat">
       {/* Background decorative elements */}
@@ -48,6 +62,16 @@ const LoginPage = () => {
         {/* Grid pattern */}
         <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.01)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.01)_1px,transparent_1px)] bg-[size:50px_50px]"></div>
       </div>
+
+      {/* Back button */}
+      <Button
+        onClick={handleBackToApp}
+        variant="ghost"
+        className="absolute top-6 left-6 text-white hover:bg-white/10 z-50"
+      >
+        <ArrowLeft className="w-4 h-4 mr-2" />
+        Back to Application
+      </Button>
 
       {/* Language selector */}
       <div className="absolute top-6 right-6">
@@ -65,7 +89,7 @@ const LoginPage = () => {
             <h1 className="text-3xl font-bold text-white mb-2 font-montserrat">
               n.Network
             </h1>
-            <p className="text-gray-400 text-sm font-montserrat">Advanced Network Tools</p>
+            <p className="text-gray-400 text-sm font-montserrat">Administrative Access</p>
           </div>
 
           {/* Login form */}

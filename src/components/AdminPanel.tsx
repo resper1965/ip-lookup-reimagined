@@ -6,16 +6,20 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { Settings, Network, LogOut, Save, Shield } from 'lucide-react';
+import { Settings, Network, LogOut, Save, Shield, ArrowLeft } from 'lucide-react';
 import { useAuth } from '@/contexts/AuthContext';
 import { useToast } from '@/hooks/use-toast';
+
+interface AdminPanelProps {
+  onBackToApp?: () => void;
+}
 
 interface NetworkSettings {
   connectivitySites: string[];
   stunServers: string[];
 }
 
-const AdminPanel = () => {
+const AdminPanel = ({ onBackToApp }: AdminPanelProps) => {
   const { logout } = useAuth();
   const { toast } = useToast();
   
@@ -77,6 +81,15 @@ const AdminPanel = () => {
     });
   };
 
+  const handleBackToApp = () => {
+    if (onBackToApp) {
+      onBackToApp();
+    } else {
+      // Recarregar a página para voltar à aplicação principal
+      window.location.reload();
+    }
+  };
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-900 via-slate-900 to-gray-800 relative overflow-hidden">
       {/* Background decorative elements */}
@@ -96,14 +109,24 @@ const AdminPanel = () => {
             <Shield className="w-8 h-8 text-brand-cyan" />
             <h1 className="text-2xl font-bold text-white">n.Network - Administrative Panel</h1>
           </div>
-          <Button
-            onClick={handleLogout}
-            variant="ghost"
-            className="text-white hover:bg-white/10"
-          >
-            <LogOut className="w-4 h-4 mr-2" />
-            Logout
-          </Button>
+          <div className="flex items-center gap-2">
+            <Button
+              onClick={handleBackToApp}
+              variant="ghost"
+              className="text-white hover:bg-white/10"
+            >
+              <ArrowLeft className="w-4 h-4 mr-2" />
+              Back to Application
+            </Button>
+            <Button
+              onClick={handleLogout}
+              variant="ghost"
+              className="text-white hover:bg-white/10"
+            >
+              <LogOut className="w-4 h-4 mr-2" />
+              Logout
+            </Button>
+          </div>
         </div>
       </div>
 

@@ -18,11 +18,13 @@ const AppContent = () => {
   const [activeTab, setActiveTab] = useState('ip-infos');
   const [showAdminPanel, setShowAdminPanel] = useState(false);
 
-  if (!isAuthenticated) {
+  // Se o painel administrativo for solicitado mas o usuário não estiver autenticado, mostrar login
+  if (showAdminPanel && !isAuthenticated) {
     return <LoginPage />;
   }
 
-  if (showAdminPanel) {
+  // Se autenticado e painel administrativo solicitado, mostrar painel
+  if (showAdminPanel && isAuthenticated) {
     return <AdminPanel />;
   }
 
