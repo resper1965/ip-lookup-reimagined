@@ -3,26 +3,38 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { RefreshCw } from "lucide-react";
 import { useState, useEffect } from "react";
+import { useNetworkSettings } from "@/hooks/useNetworkSettings";
 
 interface ConnectivitySite {
   name: string;
   icon: string;
   status: 'OK' | 'SLOW' | 'FAILED';
   latency: number;
+  url: string;
 }
 
 const ConnectivityTest = () => {
   const [isLoading, setIsLoading] = useState(false);
-  const [sites, setSites] = useState<ConnectivitySite[]>([
-    { name: 'Taobao', icon: '🏠', status: 'SLOW', latency: 393 },
-    { name: 'Baidu', icon: '✏️', status: 'SLOW', latency: 1022 },
-    { name: 'WeChat', icon: '💬', status: 'SLOW', latency: 857 },
-    { name: 'Google', icon: '🌐', status: 'OK', latency: 138 },
-    { name: 'Cloudflare', icon: '☁️', status: 'OK', latency: 76 },
-    { name: 'YouTube', icon: '📺', status: 'OK', latency: 147 },
-    { name: 'GitHub', icon: '🐙', status: 'OK', latency: 53 },
-    { name: 'ChatGPT', icon: '💬', status: 'SLOW', latency: 698 },
-  ]);
+  const [sites, setSites] = useState<ConnectivitySite[]>([]);
+  const { settings } = useNetworkSettings();
+
+  useEffect(() => {
+    // Mapear os sites configurados para o formato do componente
+    const mappedSites = settings.connectivitySites.map((url, index) => {
+      const domain = new URL(url).hostname.replace('www.', '');
+      const name = domain.split('.')[0];
+      const icons = ['🏠', '🌐', '☁️', '📺', '🐙', '💬', '✏️', '🚀'];
+      
+      return {
+        name: name.charAt(0).toUpperCase() + name.slice(1),
+        icon: icons[index % icons.length],
+        status: Math.random() > 0.5 ? 'OK' : 'SLOW' as 'OK' | 'SLOW',
+        latency: Math.floor(Math.random() * 1000) + 50,
+        url: url
+      };
+    });
+    setSites(mappedSites);
+  }, [settings.connectivitySites]);
 
   const runTest = async () => {
     setIsLoading(true);

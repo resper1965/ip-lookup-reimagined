@@ -3,7 +3,8 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { RefreshCw, MapPin } from "lucide-react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useNetworkSettings } from "@/hooks/useNetworkSettings";
 
 interface WebRTCServer {
   name: string;
@@ -16,40 +17,24 @@ interface WebRTCServer {
 
 const WebRTCTest = () => {
   const [isLoading, setIsLoading] = useState(false);
-  const [servers] = useState<WebRTCServer[]>([
-    {
-      name: 'Google',
-      icon: '🌐',
-      server: 'stun.l.google.com:19302',
-      ip: '191.241.242.89',
-      natType: 'Port Restricted Cone or Symmetric',
-      region: 'Brazil 🇧🇷'
-    },
-    {
-      name: 'BlackBerry',
-      icon: '📱',
-      server: 'stun.voip.blackberry.com:3478',
-      ip: '191.241.242.89',
-      natType: 'Port Restricted Cone or Symmetric',
-      region: 'Brazil 🇧🇷'
-    },
-    {
-      name: 'Twilio',
-      icon: '☎️',
-      server: 'global.stun.twilio.com',
-      ip: '191.241.242.89',
-      natType: 'Port Restricted Cone or Symmetric',
-      region: 'Brazil 🇧🇷'
-    },
-    {
-      name: 'Cloudflare',
-      icon: '☁️',
-      server: 'stun.cloudflare.com',
-      ip: '191.241.242.89',
-      natType: 'Port Restricted Cone or Symmetric',
-      region: 'Brazil 🇧🇷'
-    }
-  ]);
+  const [servers, setServers] = useState<WebRTCServer[]>([]);
+  const { settings } = useNetworkSettings();
+
+  useEffect(() => {
+    // Mapear os servidores STUN configurados para o formato do componente
+    const mappedServers = settings.stunServers.map((server, index) => {
+      const serverName = server.split(':')[1]?.split('.')[1] || `Server ${index + 1}`;
+      return {
+        name: serverName.charAt(0).toUpperCase() + serverName.slice(1),
+        icon: '🌐',
+        server: server,
+        ip: '191.241.242.89', // IP simulado
+        natType: 'Port Restricted Cone or Symmetric',
+        region: 'Brazil 🇧🇷'
+      };
+    });
+    setServers(mappedServers);
+  }, [settings.stunServers]);
 
   const runTest = async () => {
     setIsLoading(true);

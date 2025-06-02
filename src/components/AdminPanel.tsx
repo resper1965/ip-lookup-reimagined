@@ -58,6 +58,12 @@ const AdminPanel = () => {
       stunServers: newStunServers
     });
 
+    // Salvar no localStorage para persistir as configurações
+    localStorage.setItem('networkSettings', JSON.stringify({
+      connectivitySites: newConnectivitySites,
+      stunServers: newStunServers
+    }));
+
     toast({
       title: "Configurações salvas!",
       description: "As configurações de rede foram atualizadas com sucesso.",
@@ -73,12 +79,12 @@ const AdminPanel = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 relative overflow-hidden">
+    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-slate-900 to-gray-800 relative overflow-hidden">
       {/* Background decorative elements */}
       <div className="absolute inset-0 overflow-hidden">
-        <div className="absolute -top-40 -right-40 w-96 h-96 bg-blue-500/20 rounded-full blur-3xl animate-pulse"></div>
-        <div className="absolute -bottom-40 -left-40 w-96 h-96 bg-purple-500/20 rounded-full blur-3xl animate-pulse"></div>
-        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-pink-500/10 rounded-full blur-3xl animate-pulse"></div>
+        <div className="absolute -top-40 -right-40 w-96 h-96 bg-brand-cyan/10 rounded-full blur-3xl animate-pulse"></div>
+        <div className="absolute -bottom-40 -left-40 w-96 h-96 bg-gray-600/10 rounded-full blur-3xl animate-pulse"></div>
+        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-slate-700/5 rounded-full blur-3xl animate-pulse"></div>
         
         {/* Grid pattern */}
         <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.01)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.01)_1px,transparent_1px)] bg-[size:50px_50px]"></div>
@@ -88,8 +94,8 @@ const AdminPanel = () => {
       <div className="relative z-10 bg-white/5 backdrop-blur-sm border-b border-white/10">
         <div className="container mx-auto px-4 py-4 flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <Shield className="w-8 h-8 text-cyan-400" />
-            <h1 className="text-2xl font-bold text-white">Painel Administrativo</h1>
+            <Shield className="w-8 h-8 text-brand-cyan" />
+            <h1 className="text-2xl font-bold text-white">n.Network - Painel Administrativo</h1>
           </div>
           <Button
             onClick={handleLogout}
@@ -120,8 +126,8 @@ const AdminPanel = () => {
             <Card className="bg-white/5 backdrop-blur-sm border border-white/10">
               <CardHeader>
                 <CardTitle className="text-white flex items-center gap-2">
-                  <Network className="w-5 h-5 text-cyan-400" />
-                  Configurações de Conectividade
+                  <Network className="w-5 h-5 text-brand-cyan" />
+                  Configurações de Conectividade e WebRTC
                 </CardTitle>
               </CardHeader>
               <CardContent className="space-y-6">
@@ -159,7 +165,7 @@ const AdminPanel = () => {
 
                 <Button
                   onClick={handleSaveNetworkSettings}
-                  className="bg-cyan-400 hover:bg-cyan-500 text-gray-900"
+                  className="bg-brand-cyan hover:bg-brand-cyan/90 text-gray-900"
                 >
                   <Save className="w-4 h-4 mr-2" />
                   Salvar Configurações
