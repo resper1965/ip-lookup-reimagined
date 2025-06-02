@@ -16,20 +16,20 @@ const LoginPage = () => {
     e.preventDefault();
     setIsLoading(true);
 
-    // Simular delay de autenticação
+    // Simulate authentication delay
     await new Promise(resolve => setTimeout(resolve, 1000));
 
     const success = login(username, password);
     
     if (success) {
       toast({
-        title: "Login realizado com sucesso!",
-        description: "Bem-vindo ao painel administrativo.",
+        title: "Login successful!",
+        description: "Welcome to the administrative panel.",
       });
     } else {
       toast({
-        title: "Erro de autenticação",
-        description: "Usuário ou senha incorretos.",
+        title: "Authentication error",
+        description: "Incorrect username or password.",
         variant: "destructive",
       });
     }
@@ -52,8 +52,8 @@ const LoginPage = () => {
       {/* Language selector */}
       <div className="absolute top-6 right-6">
         <select className="bg-brand-cyan text-gray-900 px-4 py-2 rounded-lg text-sm font-medium font-montserrat">
-          <option value="pt">Português</option>
           <option value="en">English</option>
+          <option value="pt">Português</option>
         </select>
       </div>
 
@@ -97,12 +97,12 @@ const LoginPage = () => {
               disabled={isLoading}
               className="w-full bg-brand-cyan hover:bg-brand-cyan/90 text-gray-900 font-medium py-3 rounded-lg text-base transition-colors font-montserrat"
             >
-              {isLoading ? 'Entrando...' : 'Login'}
+              {isLoading ? 'Logging in...' : 'Login'}
             </Button>
 
             <div className="text-center">
               <a href="#" className="text-brand-cyan hover:text-brand-cyan/80 text-sm transition-colors font-montserrat">
-                Esqueceu sua senha?
+                Forgot your password?
               </a>
             </div>
           </form>
@@ -110,7 +110,7 @@ const LoginPage = () => {
 
         {/* Hint */}
         <div className="text-center mt-6 text-gray-400 text-sm">
-          <p className="font-montserrat">Usuário: pentestAdmin | Senha: admin123</p>
+          <p className="font-montserrat">Username: pentestAdmin | Password: admin123</p>
         </div>
 
         {/* Developer credit */}

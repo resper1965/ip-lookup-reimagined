@@ -58,23 +58,22 @@ const AdminPanel = () => {
       stunServers: newStunServers
     });
 
-    // Salvar no localStorage para persistir as configurações
     localStorage.setItem('networkSettings', JSON.stringify({
       connectivitySites: newConnectivitySites,
       stunServers: newStunServers
     }));
 
     toast({
-      title: "Configurações salvas!",
-      description: "As configurações de rede foram atualizadas com sucesso.",
+      title: "Settings saved!",
+      description: "Network settings have been updated successfully.",
     });
   };
 
   const handleLogout = () => {
     logout();
     toast({
-      title: "Logout realizado",
-      description: "Você foi desconectado do sistema.",
+      title: "Logout successful",
+      description: "You have been logged out of the system.",
     });
   };
 
@@ -95,7 +94,7 @@ const AdminPanel = () => {
         <div className="container mx-auto px-4 py-4 flex items-center justify-between">
           <div className="flex items-center gap-3">
             <Shield className="w-8 h-8 text-brand-cyan" />
-            <h1 className="text-2xl font-bold text-white">n.Network - Painel Administrativo</h1>
+            <h1 className="text-2xl font-bold text-white">n.Network - Administrative Panel</h1>
           </div>
           <Button
             onClick={handleLogout}
@@ -103,7 +102,7 @@ const AdminPanel = () => {
             className="text-white hover:bg-white/10"
           >
             <LogOut className="w-4 h-4 mr-2" />
-            Sair
+            Logout
           </Button>
         </div>
       </div>
@@ -114,11 +113,11 @@ const AdminPanel = () => {
           <TabsList className="grid w-full grid-cols-2 max-w-md bg-white/10 backdrop-blur-sm">
             <TabsTrigger value="network" className="data-[state=active]:bg-white/20">
               <Network className="w-4 h-4 mr-2" />
-              Configurações de Rede
+              Network Settings
             </TabsTrigger>
             <TabsTrigger value="tools" className="data-[state=active]:bg-white/20">
               <Settings className="w-4 h-4 mr-2" />
-              Ferramentas
+              Tools
             </TabsTrigger>
           </TabsList>
 
@@ -127,13 +126,13 @@ const AdminPanel = () => {
               <CardHeader>
                 <CardTitle className="text-white flex items-center gap-2">
                   <Network className="w-5 h-5 text-brand-cyan" />
-                  Configurações de Conectividade e WebRTC
+                  Connectivity and WebRTC Settings
                 </CardTitle>
               </CardHeader>
               <CardContent className="space-y-6">
                 <div className="space-y-3">
                   <Label htmlFor="connectivity-sites" className="text-white">
-                    Sites para Teste de Conectividade (um por linha)
+                    Connectivity Test Sites (one per line)
                   </Label>
                   <Textarea
                     id="connectivity-sites"
@@ -143,13 +142,13 @@ const AdminPanel = () => {
                     className="min-h-[120px] bg-white/10 border-white/20 text-white"
                   />
                   <p className="text-sm text-gray-400">
-                    Sites usados para testar a conectividade da rede
+                    Sites used to test network connectivity
                   </p>
                 </div>
 
                 <div className="space-y-3">
                   <Label htmlFor="stun-servers" className="text-white">
-                    Servidores STUN para WebRTC (um por linha)
+                    STUN Servers for WebRTC (one per line)
                   </Label>
                   <Textarea
                     id="stun-servers"
@@ -159,7 +158,7 @@ const AdminPanel = () => {
                     className="min-h-[120px] bg-white/10 border-white/20 text-white"
                   />
                   <p className="text-sm text-gray-400">
-                    Servidores STUN são usados para detecção de NAT e obtenção do IP público via WebRTC
+                    STUN servers are used for NAT detection and obtaining public IP via WebRTC
                   </p>
                 </div>
 
@@ -168,7 +167,7 @@ const AdminPanel = () => {
                   className="bg-brand-cyan hover:bg-brand-cyan/90 text-gray-900"
                 >
                   <Save className="w-4 h-4 mr-2" />
-                  Salvar Configurações
+                  Save Settings
                 </Button>
               </CardContent>
             </Card>
@@ -178,12 +177,12 @@ const AdminPanel = () => {
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               <Card className="bg-white/5 backdrop-blur-sm border border-white/10">
                 <CardHeader>
-                  <CardTitle className="text-white text-lg">Status do Sistema</CardTitle>
+                  <CardTitle className="text-white text-lg">System Status</CardTitle>
                 </CardHeader>
                 <CardContent>
                   <div className="space-y-2 text-gray-300">
-                    <p>Sites Configurados: {networkSettings.connectivitySites.length}</p>
-                    <p>Servidores STUN: {networkSettings.stunServers.length}</p>
+                    <p>Configured Sites: {networkSettings.connectivitySites.length}</p>
+                    <p>STUN Servers: {networkSettings.stunServers.length}</p>
                     <p>Status: <span className="text-green-400">Online</span></p>
                   </div>
                 </CardContent>
@@ -191,28 +190,28 @@ const AdminPanel = () => {
 
               <Card className="bg-white/5 backdrop-blur-sm border border-white/10">
                 <CardHeader>
-                  <CardTitle className="text-white text-lg">Configurações Ativas</CardTitle>
+                  <CardTitle className="text-white text-lg">Active Settings</CardTitle>
                 </CardHeader>
                 <CardContent>
                   <div className="space-y-2 text-gray-300 text-sm">
-                    <p>Última atualização: Agora</p>
-                    <p>Modo de teste: Ativo</p>
-                    <p>Logs: Habilitados</p>
+                    <p>Last update: Now</p>
+                    <p>Test mode: Active</p>
+                    <p>Logs: Enabled</p>
                   </div>
                 </CardContent>
               </Card>
 
               <Card className="bg-white/5 backdrop-blur-sm border border-white/10">
                 <CardHeader>
-                  <CardTitle className="text-white text-lg">Ações Rápidas</CardTitle>
+                  <CardTitle className="text-white text-lg">Quick Actions</CardTitle>
                 </CardHeader>
                 <CardContent>
                   <div className="space-y-2">
                     <Button size="sm" variant="outline" className="w-full text-white border-white/20">
-                      Reiniciar Testes
+                      Restart Tests
                     </Button>
                     <Button size="sm" variant="outline" className="w-full text-white border-white/20">
-                      Limpar Cache
+                      Clear Cache
                     </Button>
                   </div>
                 </CardContent>

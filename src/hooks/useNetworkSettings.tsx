@@ -26,14 +26,14 @@ export const useNetworkSettings = () => {
   const [settings, setSettings] = useState<NetworkSettings>(defaultSettings);
 
   useEffect(() => {
-    // Carregar configurações do localStorage ao inicializar
+    // Load settings from localStorage on initialization
     const savedSettings = localStorage.getItem('networkSettings');
     if (savedSettings) {
       try {
         const parsed = JSON.parse(savedSettings);
         setSettings(parsed);
       } catch (error) {
-        console.error('Erro ao carregar configurações:', error);
+        console.error('Error loading settings:', error);
       }
     }
   }, []);
