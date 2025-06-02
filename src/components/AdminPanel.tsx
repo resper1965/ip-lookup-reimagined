@@ -1,5 +1,4 @@
-
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -9,42 +8,26 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Settings, Network, LogOut, Save, Shield, ArrowLeft } from 'lucide-react';
 import { useAuth } from '@/contexts/AuthContext';
 import { useToast } from '@/hooks/use-toast';
+import { useNetworkSettings } from '@/hooks/useNetworkSettings';
 
 interface AdminPanelProps {
   onBackToApp?: () => void;
 }
 
-interface NetworkSettings {
-  connectivitySites: string[];
-  stunServers: string[];
-}
-
 const AdminPanel = ({ onBackToApp }: AdminPanelProps) => {
   const { logout } = useAuth();
   const { toast } = useToast();
+  const { settings, updateSettings } = useNetworkSettings();
   
-  const [networkSettings, setNetworkSettings] = useState<NetworkSettings>({
-    connectivitySites: [
-      'https://www.google.com',
-      'https://www.cloudflare.com',
-      'https://www.microsoft.com',
-      'https://github.com',
-      'https://www.youtube.com'
-    ],
-    stunServers: [
-      'stun:stun.l.google.com:19302',
-      'stun:stun1.l.google.com:19302',
-      'stun:stun2.l.google.com:19302',
-      'stun:stun.cloudflare.com:3478'
-    ]
-  });
+  const [connectivityText, setConnectivityText] = useState('');
+  const [stunText, setStunText] = useState('');
 
-  const [connectivityText, setConnectivityText] = useState(
-    networkSettings.connectivitySites.join('\n')
-  );
-  const [stunText, setStunText] = useState(
-    networkSettings.stunServers.join('\n')
-  );
+  // Update text areas when settings change
+  useEffect(() => {
+    setConnectivityText(settings.connectivitySites.join('\n'));
+    setStunText(settings.stunServers.join('\n'));
+    console.log('AdminPanel: Settings loaded:', settings);
+  }, [settings]);
 
   const handleSaveNetworkSettings = () => {
     const newConnectivitySites = connectivityText
@@ -57,15 +40,13 @@ const AdminPanel = ({ onBackToApp }: AdminPanelProps) => {
       .filter(server => server.trim())
       .map(server => server.trim());
 
-    setNetworkSettings({
+    const newSettings = {
       connectivitySites: newConnectivitySites,
       stunServers: newStunServers
-    });
+    };
 
-    localStorage.setItem('networkSettings', JSON.stringify({
-      connectivitySites: newConnectivitySites,
-      stunServers: newStunServers
-    }));
+    updateSettings(newSettings);
+    console.log('AdminPanel: Saving settings:', newSettings);
 
     toast({
       title: "Settings saved!",
@@ -204,8 +185,8 @@ const AdminPanel = ({ onBackToApp }: AdminPanelProps) => {
                 </CardHeader>
                 <CardContent>
                   <div className="space-y-2 text-gray-300">
-                    <p>Configured Sites: {networkSettings.connectivitySites.length}</p>
-                    <p>STUN Servers: {networkSettings.stunServers.length}</p>
+                    <p>Configured Sites: {settings.connectivitySites.length}</p>
+                    <p>STUN Servers: {settings.stunServers.length}</p>
                     <p>Status: <span className="text-green-400">Online</span></p>
                   </div>
                 </CardContent>

@@ -32,15 +32,33 @@ export const useNetworkSettings = () => {
       try {
         const parsed = JSON.parse(savedSettings);
         setSettings(parsed);
+        console.log('Loaded settings from localStorage:', parsed);
       } catch (error) {
         console.error('Error loading settings:', error);
       }
     }
+
+    // Listen for storage changes from other tabs/windows
+    const handleStorageChange = (e: StorageEvent) => {
+      if (e.key === 'networkSettings' && e.newValue) {
+        try {
+          const newSettings = JSON.parse(e.newValue);
+          setSettings(newSettings);
+          console.log('Settings updated from storage event:', newSettings);
+        } catch (error) {
+          console.error('Error parsing storage change:', error);
+        }
+      }
+    };
+
+    window.addEventListener('storage', handleStorageChange);
+    return () => window.removeEventListener('storage', handleStorageChange);
   }, []);
 
   const updateSettings = (newSettings: NetworkSettings) => {
     setSettings(newSettings);
     localStorage.setItem('networkSettings', JSON.stringify(newSettings));
+    console.log('Settings updated and saved:', newSettings);
   };
 
   return {

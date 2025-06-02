@@ -74,14 +74,14 @@ const AdvancedToolsImplemented = () => {
       await navigator.clipboard.writeText(text);
       setCopied(text);
       toast({
-        title: "Copiado!",
-        description: "Texto copiado para a área de transferência.",
+        title: "Copied!",
+        description: "Text copied to clipboard.",
       });
       setTimeout(() => setCopied(null), 2000);
     } catch (error) {
       toast({
-        title: "Erro ao copiar",
-        description: "Não foi possível copiar o texto.",
+        title: "Copy error",
+        description: "Could not copy text.",
         variant: "destructive",
       });
     }
@@ -90,7 +90,7 @@ const AdvancedToolsImplemented = () => {
   const runGlobalLatencyTest = async () => {
     setIsLoading(true);
     
-    // Simular teste de latência
+    // Simulate latency test
     for (let i = 0; i < pingResults.length; i++) {
       await new Promise(resolve => setTimeout(resolve, 500));
       setPingResults(prev => prev.map((result, index) => {
@@ -107,8 +107,8 @@ const AdvancedToolsImplemented = () => {
     
     setIsLoading(false);
     toast({
-      title: "Teste de latência concluído!",
-      description: "Resultados atualizados com sucesso.",
+      title: "Latency test completed!",
+      description: "Results updated successfully.",
     });
   };
 
@@ -117,7 +117,7 @@ const AdvancedToolsImplemented = () => {
     
     setIsLoading(true);
     
-    // Simular busca whois
+    // Simulate whois search
     await new Promise(resolve => setTimeout(resolve, 2000));
     
     setWhoisResult({
@@ -136,7 +136,7 @@ const AdvancedToolsImplemented = () => {
     
     setIsLoading(true);
     
-    // Simular resolução DNS
+    // Simulate DNS resolution
     await new Promise(resolve => setTimeout(resolve, 1500));
     
     const mockResults: DNSResult[] = [
@@ -157,7 +157,7 @@ const AdvancedToolsImplemented = () => {
     
     setIsLoading(true);
     
-    // Simular lookup MAC
+    // Simulate MAC lookup
     await new Promise(resolve => setTimeout(resolve, 1000));
     
     setMacResult('Intel Corporate (00:1B:77:XX:XX:XX)');
@@ -175,10 +175,10 @@ const AdvancedToolsImplemented = () => {
       <div className="text-center space-y-4">
         <div className="flex items-center justify-center gap-3">
           <div className="text-4xl">🛠️</div>
-          <h1 className="text-4xl font-bold text-white">Ferramentas Avançadas</h1>
+          <h1 className="text-4xl font-bold text-white">Advanced Tools</h1>
         </div>
         <p className="text-gray-300 max-w-4xl mx-auto">
-          Ferramentas profissionais para análise de rede e diagnóstico avançado.
+          Professional tools for network analysis and advanced diagnostics.
         </p>
       </div>
 
@@ -186,7 +186,7 @@ const AdvancedToolsImplemented = () => {
         <TabsList className="grid w-full grid-cols-5 bg-white/10 backdrop-blur-sm">
           <TabsTrigger value="latency" className="data-[state=active]:bg-white/20">
             <Activity className="w-4 h-4 mr-1" />
-            Latência
+            Latency
           </TabsTrigger>
           <TabsTrigger value="whois" className="data-[state=active]:bg-white/20">
             <Search className="w-4 h-4 mr-1" />
@@ -202,7 +202,7 @@ const AdvancedToolsImplemented = () => {
           </TabsTrigger>
           <TabsTrigger value="security" className="data-[state=active]:bg-white/20">
             <Shield className="w-4 h-4 mr-1" />
-            Segurança
+            Security
           </TabsTrigger>
         </TabsList>
 
@@ -212,7 +212,7 @@ const AdvancedToolsImplemented = () => {
               <div className="flex items-center justify-between">
                 <CardTitle className="text-white flex items-center gap-2">
                   <Activity className="w-5 h-5 text-purple-400" />
-                  Teste de Latência Global
+                  Global Latency Test
                 </CardTitle>
                 <Button
                   onClick={runGlobalLatencyTest}
@@ -221,7 +221,7 @@ const AdvancedToolsImplemented = () => {
                   className="bg-purple-500 hover:bg-purple-600"
                 >
                   <RefreshCw className={`w-4 h-4 mr-2 ${isLoading ? 'animate-spin' : ''}`} />
-                  {isLoading ? 'Testando...' : 'Testar'}
+                  {isLoading ? 'Testing...' : 'Test'}
                 </Button>
               </div>
             </CardHeader>
@@ -252,14 +252,14 @@ const AdvancedToolsImplemented = () => {
             <CardHeader>
               <CardTitle className="text-white flex items-center gap-2">
                 <Search className="w-5 h-5 text-pink-400" />
-                Pesquisa Whois
+                Whois Lookup
               </CardTitle>
             </CardHeader>
             <CardContent className="space-y-4">
               <div className="flex gap-2">
                 <Input
                   type="text"
-                  placeholder="exemplo.com"
+                  placeholder="example.com"
                   value={whoisDomain}
                   onChange={(e) => setWhoisDomain(e.target.value)}
                   className="bg-white/10 border-white/20 text-white"
@@ -269,16 +269,16 @@ const AdvancedToolsImplemented = () => {
                   disabled={isLoading}
                   className="bg-pink-500 hover:bg-pink-600"
                 >
-                  {isLoading ? 'Pesquisando...' : 'Pesquisar'}
+                  {isLoading ? 'Searching...' : 'Search'}
                 </Button>
               </div>
 
               {whoisResult && (
                 <div className="bg-black/20 p-4 rounded-lg space-y-2">
-                  <div><span className="text-gray-400">Domínio:</span> <span className="text-white">{whoisResult.domain}</span></div>
-                  <div><span className="text-gray-400">Registrador:</span> <span className="text-white">{whoisResult.registrar}</span></div>
-                  <div><span className="text-gray-400">Criação:</span> <span className="text-white">{whoisResult.creationDate}</span></div>
-                  <div><span className="text-gray-400">Expiração:</span> <span className="text-white">{whoisResult.expirationDate}</span></div>
+                  <div><span className="text-gray-400">Domain:</span> <span className="text-white">{whoisResult.domain}</span></div>
+                  <div><span className="text-gray-400">Registrar:</span> <span className="text-white">{whoisResult.registrar}</span></div>
+                  <div><span className="text-gray-400">Created:</span> <span className="text-white">{whoisResult.creationDate}</span></div>
+                  <div><span className="text-gray-400">Expires:</span> <span className="text-white">{whoisResult.expirationDate}</span></div>
                   <div>
                     <span className="text-gray-400">Name Servers:</span>
                     <div className="ml-4 mt-1">
@@ -298,7 +298,7 @@ const AdvancedToolsImplemented = () => {
             <CardHeader>
               <CardTitle className="text-white flex items-center gap-2">
                 <Network className="w-5 h-5 text-cyan-400" />
-                Resolução DNS
+                DNS Resolution
               </CardTitle>
             </CardHeader>
             <CardContent className="space-y-4">
@@ -326,7 +326,7 @@ const AdvancedToolsImplemented = () => {
                   disabled={isLoading}
                   className="bg-cyan-500 hover:bg-cyan-600"
                 >
-                  {isLoading ? 'Resolvendo...' : 'Resolver'}
+                  {isLoading ? 'Resolving...' : 'Resolve'}
                 </Button>
               </div>
 
@@ -368,7 +368,7 @@ const AdvancedToolsImplemented = () => {
             <CardHeader>
               <CardTitle className="text-white flex items-center gap-2">
                 <Network className="w-5 h-5 text-indigo-400" />
-                Consulta de Endereço MAC
+                MAC Address Lookup
               </CardTitle>
             </CardHeader>
             <CardContent className="space-y-4">
@@ -385,13 +385,13 @@ const AdvancedToolsImplemented = () => {
                   disabled={isLoading}
                   className="bg-indigo-500 hover:bg-indigo-600"
                 >
-                  {isLoading ? 'Consultando...' : 'Consultar'}
+                  {isLoading ? 'Looking up...' : 'Lookup'}
                 </Button>
               </div>
 
               {macResult && (
                 <div className="bg-black/20 p-4 rounded-lg">
-                  <div><span className="text-gray-400">Fabricante:</span> <span className="text-white">{macResult}</span></div>
+                  <div><span className="text-gray-400">Manufacturer:</span> <span className="text-white">{macResult}</span></div>
                 </div>
               )}
             </CardContent>
@@ -404,22 +404,22 @@ const AdvancedToolsImplemented = () => {
               <CardHeader>
                 <CardTitle className="text-white flex items-center gap-2">
                   <Eye className="w-5 h-5 text-yellow-400" />
-                  Teste de Invisibilidade
+                  Privacy Test
                 </CardTitle>
               </CardHeader>
               <CardContent>
                 <div className="space-y-2">
                   <div className="flex items-center gap-2">
                     <div className="w-3 h-3 rounded-full bg-green-500"></div>
-                    <span className="text-white">Proxy/VPN: Não detectado</span>
+                    <span className="text-white">Proxy/VPN: Not detected</span>
                   </div>
                   <div className="flex items-center gap-2">
                     <div className="w-3 h-3 rounded-full bg-green-500"></div>
-                    <span className="text-white">WebRTC: Protegido</span>
+                    <span className="text-white">WebRTC: Protected</span>
                   </div>
                   <div className="flex items-center gap-2">
                     <div className="w-3 h-3 rounded-full bg-yellow-500"></div>
-                    <span className="text-white">DNS: Verificação necessária</span>
+                    <span className="text-white">DNS: Verification needed</span>
                   </div>
                 </div>
               </CardContent>
@@ -429,22 +429,22 @@ const AdvancedToolsImplemented = () => {
               <CardHeader>
                 <CardTitle className="text-white flex items-center gap-2">
                   <Lock className="w-5 h-5 text-red-400" />
-                  Checklist de Segurança
+                  Security Checklist
                 </CardTitle>
               </CardHeader>
               <CardContent>
                 <div className="space-y-2 text-sm">
                   <div className="flex items-center gap-2">
                     <CheckCircle className="w-4 h-4 text-green-400" />
-                    <span className="text-white">HTTPS habilitado</span>
+                    <span className="text-white">HTTPS enabled</span>
                   </div>
                   <div className="flex items-center gap-2">
                     <CheckCircle className="w-4 h-4 text-green-400" />
-                    <span className="text-white">Certificado válido</span>
+                    <span className="text-white">Valid certificate</span>
                   </div>
                   <div className="flex items-center gap-2">
                     <CheckCircle className="w-4 h-4 text-green-400" />
-                    <span className="text-white">Conexão segura</span>
+                    <span className="text-white">Secure connection</span>
                   </div>
                 </div>
               </CardContent>
