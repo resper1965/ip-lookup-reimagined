@@ -40,46 +40,77 @@ const WebRTCTest = () => {
   const measureLatencyToSTUN = async (stunUrl: string): Promise<number | null> => {
     return new Promise((resolve) => {
       const startTime = Date.now();
+      let resolved = false;
       
       try {
+        console.log(`Iniciando teste de latência para: ${stunUrl}`);
+        
         const pc = new RTCPeerConnection({
-          iceServers: [{ urls: stunUrl }]
+          iceServers: [{ urls: stunUrl }],
+          iceCandidatePoolSize: 10
         });
 
-        let resolved = false;
-
+        // Timeout mais agressivo
         const timeout = setTimeout(() => {
           if (!resolved) {
             resolved = true;
+            console.log(`Timeout para ${stunUrl} após 5 segundos`);
             pc.close();
             resolve(null);
           }
-        }, 10000); // 10 segundos timeout
+        }, 5000);
+
+        let candidateFound = false;
 
         pc.onicecandidate = (event) => {
-          if (event.candidate && event.candidate.candidate.includes('srflx') && !resolved) {
-            resolved = true;
-            clearTimeout(timeout);
-            const latency = Date.now() - startTime;
-            pc.close();
-            resolve(latency);
+          if (event.candidate && !resolved) {
+            const candidate = event.candidate.candidate;
+            console.log(`Candidato recebido para ${stunUrl}:`, candidate);
+            
+            // Qualquer candidato que não seja host é válido para medir latência
+            if (candidate.includes('srflx') || candidate.includes('relay') || candidate.includes('prflx')) {
+              candidateFound = true;
+              resolved = true;
+              clearTimeout(timeout);
+              const latency = Date.now() - startTime;
+              console.log(`Latência medida para ${stunUrl}: ${latency}ms`);
+              pc.close();
+              resolve(latency);
+            }
           }
         };
 
         pc.onicegatheringstatechange = () => {
+          console.log(`Estado de coleta ICE para ${stunUrl}: ${pc.iceGatheringState}`);
+          
           if (pc.iceGatheringState === 'complete' && !resolved) {
             resolved = true;
             clearTimeout(timeout);
-            const latency = Date.now() - startTime;
+            const latency = candidateFound ? Date.now() - startTime : null;
+            console.log(`Coleta completa para ${stunUrl}, latência: ${latency}ms`);
             pc.close();
             resolve(latency);
           }
         };
 
-        // Criar oferta para iniciar coleta de candidatos ICE
-        pc.createOffer()
-          .then(offer => pc.setLocalDescription(offer))
-          .catch(() => {
+        pc.oniceconnectionstatechange = () => {
+          console.log(`Estado de conexão ICE para ${stunUrl}: ${pc.iceConnectionState}`);
+        };
+
+        // Criar canal de dados para forçar a coleta de candidatos
+        const dataChannel = pc.createDataChannel('test');
+        
+        // Criar oferta
+        pc.createOffer({ offerToReceiveAudio: false, offerToReceiveVideo: false })
+          .then(offer => {
+            console.log(`Oferta criada para ${stunUrl}`);
+            return pc.setLocalDescription(offer);
+          })
+          .then(() => {
+            console.log(`Descrição local definida para ${stunUrl}`);
+          })
+          .catch(error => {
+            console.error(`Erro ao criar oferta para ${stunUrl}:`, error);
             if (!resolved) {
               resolved = true;
               clearTimeout(timeout);
@@ -89,7 +120,7 @@ const WebRTCTest = () => {
           });
 
       } catch (error) {
-        console.error('Erro ao medir latência STUN:', error);
+        console.error(`Erro geral ao medir latência para ${stunUrl}:`, error);
         resolve(null);
       }
     });
@@ -114,14 +145,15 @@ const WebRTCTest = () => {
 
   const runTest = async () => {
     setIsLoading(true);
+    console.log('Iniciando testes de latência WebRTC');
     
     // Marcar todos os servidores como carregando
     setServers(prev => prev.map(server => ({ ...server, isLoading: true, latency: null })));
 
-    // Testar cada servidor sequencialmente
+    // Testar cada servidor
     for (let i = 0; i < servers.length; i++) {
       const server = servers[i];
-      console.log(`Testando latência para ${server.name}: ${server.server}`);
+      console.log(`Testando servidor ${i + 1}/${servers.length}: ${server.name} (${server.server})`);
       
       const latency = await measureLatencyToSTUN(server.server);
       
@@ -132,10 +164,11 @@ const WebRTCTest = () => {
         return s;
       }));
 
-      // Pequena pausa entre testes para não sobrecarregar
-      await new Promise(resolve => setTimeout(resolve, 500));
+      // Pausa menor entre testes
+      await new Promise(resolve => setTimeout(resolve, 200));
     }
 
+    console.log('Todos os testes de latência concluídos');
     setIsLoading(false);
   };
 
