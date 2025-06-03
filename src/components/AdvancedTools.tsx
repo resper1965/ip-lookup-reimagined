@@ -1,7 +1,7 @@
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Globe, Activity, Shield, Search, Network, Eye, Lock } from "lucide-react";
+import { Globe, Activity, Shield, Search, Network, Eye, Lock, Settings } from "lucide-react";
 
 interface AdvancedTool {
   title: string;
@@ -72,7 +72,7 @@ const AdvancedTools = () => {
     <div className="space-y-8">
       <div className="text-center space-y-4">
         <div className="flex items-center justify-center gap-3">
-          <div className="text-4xl">⚙️</div>
+          <Settings className="w-12 h-12 text-gray-300" strokeWidth={1} />
           <h1 className="text-4xl font-bold text-white">Advanced Tools</h1>
         </div>
         <p className="text-gray-300 max-w-4xl mx-auto">

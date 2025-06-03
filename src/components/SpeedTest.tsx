@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Progress } from "@/components/ui/progress";
 import { LineChart, Line, XAxis, YAxis, ResponsiveContainer, ScatterChart, Scatter } from 'recharts';
-import { ArrowDown, ArrowUp, Activity, Pause, Play } from "lucide-react";
+import { ArrowDown, ArrowUp, Activity, Pause, Play, Zap } from "lucide-react";
 import { useState, useEffect } from "react";
 
 const SpeedTest = () => {
@@ -118,7 +118,7 @@ const SpeedTest = () => {
     <div className="space-y-8">
       <div className="text-center space-y-4">
         <div className="flex items-center justify-center gap-3">
-          <div className="text-4xl">⚡</div>
+          <Zap className="w-12 h-12 text-gray-300" strokeWidth={1} />
           <h1 className="text-4xl font-bold text-white">Speed Test</h1>
         </div>
         <p className="text-gray-300 max-w-4xl mx-auto">

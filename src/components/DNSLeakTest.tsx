@@ -1,7 +1,7 @@
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { RefreshCw, MapPin, Globe } from "lucide-react";
+import { RefreshCw, MapPin, Globe, Shield } from "lucide-react";
 import { useState } from "react";
 
 interface DNSTest {
@@ -50,7 +50,7 @@ const DNSLeakTest = () => {
     <div className="space-y-8">
       <div className="text-center space-y-4">
         <div className="flex items-center justify-center gap-3">
-          <div className="text-4xl">🔍</div>
+          <Shield className="w-12 h-12 text-gray-300" strokeWidth={1} />
           <h1 className="text-4xl font-bold text-white">DNS Leak Test</h1>
           <Button 
             onClick={runTest}

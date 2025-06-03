@@ -2,7 +2,7 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { RefreshCw, MapPin } from "lucide-react";
+import { RefreshCw, MapPin, Network } from "lucide-react";
 import { useState, useEffect } from "react";
 import { useNetworkSettings } from "@/hooks/useNetworkSettings";
 
@@ -58,7 +58,7 @@ const WebRTCTest = () => {
     <div className="space-y-8">
       <div className="text-center space-y-4">
         <div className="flex items-center justify-center gap-3">
-          <div className="text-4xl">🌐</div>
+          <Network className="w-12 h-12 text-gray-300" strokeWidth={1} />
           <h1 className="text-4xl font-bold text-white">WebRTC Test</h1>
           <Button 
             onClick={runTest}
