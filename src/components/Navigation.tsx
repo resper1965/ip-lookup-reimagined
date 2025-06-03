@@ -82,7 +82,7 @@ const Navigation = ({ activeTab, onTabChange, onSettingsClick }: NavigationProps
               >
                 <span className="mr-0.5">{tab.icon}</span>
                 {tab.label}
-              </button>
+              </Button>
             ))}
           </div>
         </div>
