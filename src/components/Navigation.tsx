@@ -40,13 +40,13 @@ const Navigation = ({ activeTab, onTabChange, onSettingsClick }: NavigationProps
                 key={tab.id}
                 variant={activeTab === tab.id ? "default" : "ghost"}
                 onClick={() => onTabChange(tab.id)}
-                className={`px-4 py-2 text-sm ${
+                className={`px-4 py-2 text-xs ${
                   activeTab === tab.id 
                     ? 'bg-blue-600 text-white' 
                     : 'text-gray-300 hover:text-white hover:bg-slate-700'
                 }`}
               >
-                <span className="mr-1.5">{tab.icon}</span>
+                <span className="mr-1">{tab.icon}</span>
                 {tab.label}
               </Button>
             ))}
@@ -61,7 +61,7 @@ const Navigation = ({ activeTab, onTabChange, onSettingsClick }: NavigationProps
               onClick={onSettingsClick}
               className="text-gray-300 hover:text-white hover:bg-slate-700"
             >
-              <Settings className="w-4 h-4" strokeWidth={1.5} />
+              <Settings className="w-4 h-4" strokeWidth={1} />
             </Button>
           </div>
         </div>
@@ -80,9 +80,9 @@ const Navigation = ({ activeTab, onTabChange, onSettingsClick }: NavigationProps
                     : 'text-gray-300 hover:text-white hover:bg-slate-700'
                 }`}
               >
-                <span className="mr-1">{tab.icon}</span>
+                <span className="mr-0.5">{tab.icon}</span>
                 {tab.label}
-              </Button>
+              </button>
             ))}
           </div>
         </div>
