@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Progress } from "@/components/ui/progress";
 import { LineChart, Line, XAxis, YAxis, ResponsiveContainer, ScatterChart, Scatter } from 'recharts';
-import { Zap, Download, Upload, Activity, Pause, Play } from "lucide-react";
+import { ArrowDown, ArrowUp, Activity, Pause, Play } from "lucide-react";
 import { useState, useEffect } from "react";
 
 const SpeedTest = () => {
@@ -12,16 +12,21 @@ const SpeedTest = () => {
   const [downloadPacketSize, setDownloadPacketSize] = useState("50");
   const [uploadPacketSize, setUploadPacketSize] = useState("15");
   const [progress, setProgress] = useState(0);
+  const [currentTest, setCurrentTest] = useState<'download' | 'upload' | 'latency' | 'idle'>('idle');
   
   const [results, setResults] = useState({
     download: 237.64,
-    upload: 0,
+    upload: 45.32,
     latency: 4.5,
     jitter: 2.88
   });
 
   const [downloadData, setDownloadData] = useState(
     Array.from({ length: 50 }, (_, i) => ({ x: i, y: Math.random() * 50 + 200 }))
+  );
+  
+  const [uploadData, setUploadData] = useState(
+    Array.from({ length: 50 }, (_, i) => ({ x: i, y: Math.random() * 30 + 20 }))
   );
   
   const [latencyData, setLatencyData] = useState(
@@ -36,17 +41,32 @@ const SpeedTest = () => {
     setIsRunning(true);
     setProgress(0);
     
-    // Simulate speed test progress
+    // Test phases: download -> upload -> latency
+    const phases = ['download', 'upload', 'latency'] as const;
+    let currentPhaseIndex = 0;
+    
     const interval = setInterval(() => {
       setProgress(prev => {
-        if (prev >= 100) {
+        const newProgress = prev + 1.2;
+        
+        // Update current test phase
+        if (newProgress < 40) {
+          setCurrentTest('download');
+        } else if (newProgress < 80) {
+          setCurrentTest('upload');
+        } else {
+          setCurrentTest('latency');
+        }
+        
+        if (newProgress >= 100) {
           clearInterval(interval);
           setIsRunning(false);
+          setCurrentTest('idle');
           return 100;
         }
-        return prev + 2;
+        return newProgress;
       });
-    }, 100);
+    }, 60);
 
     // Simulate real-time data updates
     const dataInterval = setInterval(() => {
@@ -55,15 +75,28 @@ const SpeedTest = () => {
         return;
       }
       
-      setDownloadData(prev => [...prev.slice(1), { 
-        x: prev.length, 
-        y: Math.random() * 50 + 200 
-      }]);
+      if (currentTest === 'download') {
+        setDownloadData(prev => [...prev.slice(1), { 
+          x: prev.length, 
+          y: Math.random() * 50 + 200 
+        }]);
+        setResults(prev => ({
+          ...prev,
+          download: Math.random() * 50 + 200
+        }));
+      } else if (currentTest === 'upload') {
+        setUploadData(prev => [...prev.slice(1), { 
+          x: prev.length, 
+          y: Math.random() * 30 + 20 
+        }]);
+        setResults(prev => ({
+          ...prev,
+          upload: Math.random() * 30 + 20
+        }));
+      }
       
       setResults(prev => ({
         ...prev,
-        download: Math.random() * 50 + 200,
-        upload: Math.random() * 20 + 10,
         latency: Math.random() * 8 + 2,
         jitter: Math.random() * 2 + 0.5
       }));
@@ -72,18 +105,20 @@ const SpeedTest = () => {
     setTimeout(() => {
       clearInterval(dataInterval);
       setIsRunning(false);
-    }, 5000);
+      setCurrentTest('idle');
+    }, 8000);
   };
 
   const stopSpeedTest = () => {
     setIsRunning(false);
+    setCurrentTest('idle');
   };
 
   return (
     <div className="space-y-8">
       <div className="text-center space-y-4">
         <div className="flex items-center justify-center gap-3">
-          <div className="text-4xl">🚀</div>
+          <div className="text-4xl">⚡</div>
           <h1 className="text-4xl font-bold text-white">Speed Test</h1>
         </div>
         <p className="text-gray-300 max-w-4xl mx-auto">
@@ -125,13 +160,13 @@ const SpeedTest = () => {
         >
           {isRunning ? (
             <>
-              <Pause className="w-5 h-5 mr-2" />
+              <Pause className="w-5 h-5 mr-2" strokeWidth={1.5} />
               Stop Speed Test
             </>
           ) : (
             <>
-              <Play className="w-5 h-5 mr-2" />
-              Start/Pause Speed Test
+              <Play className="w-5 h-5 mr-2" strokeWidth={1.5} />
+              Start Speed Test
             </>
           )}
         </Button>
@@ -142,7 +177,12 @@ const SpeedTest = () => {
       </div>
 
       {isRunning && (
-        <div className="w-full max-w-2xl mx-auto">
+        <div className="w-full max-w-2xl mx-auto space-y-2">
+          <div className="text-center text-white text-sm">
+            {currentTest === 'download' && 'Testing Download Speed...'}
+            {currentTest === 'upload' && 'Testing Upload Speed...'}
+            {currentTest === 'latency' && 'Testing Latency & Jitter...'}
+          </div>
           <Progress value={progress} className="h-4" />
         </div>
       )}
@@ -151,7 +191,7 @@ const SpeedTest = () => {
         <Card className="bg-white/5 backdrop-blur-sm border border-white/10 text-center">
           <CardHeader className="pb-2">
             <CardTitle className="text-blue-400 flex items-center justify-center gap-2">
-              <Download className="w-5 h-5" />
+              <ArrowDown className="w-5 h-5" strokeWidth={1.5} />
               Download
             </CardTitle>
           </CardHeader>
@@ -166,13 +206,13 @@ const SpeedTest = () => {
         <Card className="bg-white/5 backdrop-blur-sm border border-white/10 text-center">
           <CardHeader className="pb-2">
             <CardTitle className="text-green-400 flex items-center justify-center gap-2">
-              <Upload className="w-5 h-5" />
+              <ArrowUp className="w-5 h-5" strokeWidth={1.5} />
               Upload
             </CardTitle>
           </CardHeader>
           <CardContent>
             <div className="text-4xl font-bold text-white mb-1">
-              {results.upload.toFixed(0)}
+              {results.upload.toFixed(2)}
               <span className="text-lg text-gray-400">Mb/s</span>
             </div>
           </CardContent>
@@ -181,7 +221,7 @@ const SpeedTest = () => {
         <Card className="bg-white/5 backdrop-blur-sm border border-white/10 text-center">
           <CardHeader className="pb-2">
             <CardTitle className="text-yellow-400 flex items-center justify-center gap-2">
-              <Activity className="w-5 h-5" />
+              <Activity className="w-5 h-5" strokeWidth={1.5} />
               Latency
             </CardTitle>
           </CardHeader>
@@ -196,7 +236,7 @@ const SpeedTest = () => {
         <Card className="bg-white/5 backdrop-blur-sm border border-white/10 text-center">
           <CardHeader className="pb-2">
             <CardTitle className="text-purple-400 flex items-center justify-center gap-2">
-              <Zap className="w-5 h-5" />
+              <Activity className="w-5 h-5" strokeWidth={1.5} />
               Jitter
             </CardTitle>
           </CardHeader>
@@ -210,7 +250,7 @@ const SpeedTest = () => {
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
-        <Card className="bg-white/5 backdrop-blur-sm border border-white/10 lg:col-span-2">
+        <Card className="bg-white/5 backdrop-blur-sm border border-white/10">
           <CardHeader>
             <CardTitle className="text-white">Download Speed</CardTitle>
           </CardHeader>
@@ -225,6 +265,28 @@ const SpeedTest = () => {
                   stroke="#06b6d4" 
                   strokeWidth={2}
                   fill="#06b6d4"
+                  fillOpacity={0.3}
+                />
+              </LineChart>
+            </ResponsiveContainer>
+          </CardContent>
+        </Card>
+
+        <Card className="bg-white/5 backdrop-blur-sm border border-white/10">
+          <CardHeader>
+            <CardTitle className="text-white">Upload Speed</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <ResponsiveContainer width="100%" height={200}>
+              <LineChart data={uploadData}>
+                <XAxis hide />
+                <YAxis hide />
+                <Line 
+                  type="monotone" 
+                  dataKey="y" 
+                  stroke="#10b981" 
+                  strokeWidth={2}
+                  fill="#10b981"
                   fillOpacity={0.3}
                 />
               </LineChart>

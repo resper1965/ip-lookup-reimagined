@@ -12,7 +12,9 @@ const defaultSettings: NetworkSettings = {
     'https://www.cloudflare.com',
     'https://www.microsoft.com',
     'https://github.com',
-    'https://www.youtube.com'
+    'https://www.youtube.com',
+    'https://ionic.health',
+    'https://ncommand-lite.ionichealthusa.com'
   ],
   stunServers: [
     'stun:stun.l.google.com:19302',

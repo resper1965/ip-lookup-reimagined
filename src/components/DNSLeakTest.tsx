@@ -1,7 +1,7 @@
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { RefreshCw, MapPin, Server } from "lucide-react";
+import { RefreshCw, MapPin, Globe } from "lucide-react";
 import { useState } from "react";
 
 interface DNSTest {
@@ -50,7 +50,7 @@ const DNSLeakTest = () => {
     <div className="space-y-8">
       <div className="text-center space-y-4">
         <div className="flex items-center justify-center gap-3">
-          <div className="text-4xl">🔴</div>
+          <div className="text-4xl">🔍</div>
           <h1 className="text-4xl font-bold text-white">DNS Leak Test</h1>
           <Button 
             onClick={runTest}
@@ -81,7 +81,7 @@ const DNSLeakTest = () => {
           <Card key={test.id} className="bg-white/5 backdrop-blur-sm border border-white/10">
             <CardHeader className="pb-3">
               <CardTitle className="text-white flex items-center gap-3">
-                <div className="text-2xl">📡</div>
+                <div className="text-2xl">🌐</div>
                 Test {test.id}
               </CardTitle>
             </CardHeader>
@@ -92,7 +92,7 @@ const DNSLeakTest = () => {
               
               <div className="bg-green-500/10 border border-green-500/20 p-3 rounded-lg space-y-2">
                 <div className="flex items-center gap-2 text-green-300">
-                  <Server className="w-4 h-4 text-gray-300" strokeWidth={1.5} />
+                  <Globe className="w-4 h-4 text-gray-300" strokeWidth={1.5} />
                   <span className="text-sm">ISP: {test.isp}</span>
                 </div>
                 <div className="flex items-center gap-2 text-green-300">

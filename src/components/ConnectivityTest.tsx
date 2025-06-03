@@ -18,16 +18,35 @@ const ConnectivityTest = () => {
   const [sites, setSites] = useState<ConnectivitySite[]>([]);
   const { settings } = useNetworkSettings();
 
+  const getSiteIcon = (url: string): string => {
+    if (url.includes('google.com')) return '🔍';
+    if (url.includes('cloudflare.com')) return '☁️';
+    if (url.includes('microsoft.com')) return '🪟';
+    if (url.includes('github.com')) return '🐙';
+    if (url.includes('youtube.com')) return '📺';
+    if (url.includes('ionic.health')) return '⚡';
+    if (url.includes('ncommand-lite.ionichealthusa.com')) return '🔧';
+    return '🌐';
+  };
+
   useEffect(() => {
     // Mapear os sites configurados para o formato do componente
     const mappedSites = settings.connectivitySites.map((url, index) => {
       const domain = new URL(url).hostname.replace('www.', '');
-      const name = domain.split('.')[0];
-      const icons = ['🏠', '🌐', '☁️', '📺', '🐙', '💬', '✏️', '🚀'];
+      let name = domain.split('.')[0];
+      
+      // Nomes específicos para certas URLs
+      if (url.includes('ncommand-lite.ionichealthusa.com')) {
+        name = 'nCLite';
+      } else if (url.includes('ionic.health')) {
+        name = 'Ionic Health';
+      } else {
+        name = name.charAt(0).toUpperCase() + name.slice(1);
+      }
       
       return {
-        name: name.charAt(0).toUpperCase() + name.slice(1),
-        icon: icons[index % icons.length],
+        name: name,
+        icon: getSiteIcon(url),
         status: Math.random() > 0.5 ? 'OK' : 'SLOW' as 'OK' | 'SLOW',
         latency: Math.floor(Math.random() * 1000) + 50,
         url: url
@@ -71,7 +90,7 @@ const ConnectivityTest = () => {
     <div className="space-y-8">
       <div className="text-center space-y-4">
         <div className="flex items-center justify-center gap-3">
-          <div className="text-4xl">🚦</div>
+          <div className="text-4xl">🌐</div>
           <h1 className="text-4xl font-bold text-white">Network Connectivity</h1>
           <Button 
             onClick={runTest}

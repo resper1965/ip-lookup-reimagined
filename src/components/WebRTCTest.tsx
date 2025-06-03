@@ -20,12 +20,24 @@ const WebRTCTest = () => {
   const [servers, setServers] = useState<WebRTCServer[]>([]);
   const { settings } = useNetworkSettings();
 
+  const getServerName = (server: string): string => {
+    if (server.includes('ionichealthusa.com')) return 'Ionic Health USA';
+    if (server.includes('ionichealth.eu')) return 'Ionic Health EU';
+    if (server.includes('ionic.health')) return 'Ionic Health BR';
+    if (server.includes('google.com')) return 'Google';
+    if (server.includes('cloudflare.com')) return 'Cloudflare';
+    if (server.includes('nextcloud.com')) return 'Nextcloud';
+    if (server.includes('webwormhole.io')) return 'WebWormhole';
+    
+    const hostname = server.split(':')[1]?.split('.')[0] || 'Unknown';
+    return hostname.charAt(0).toUpperCase() + hostname.slice(1);
+  };
+
   useEffect(() => {
     // Mapear os servidores STUN configurados para o formato do componente
     const mappedServers = settings.stunServers.map((server, index) => {
-      const serverName = server.split(':')[1]?.split('.')[1] || `Server ${index + 1}`;
       return {
-        name: serverName.charAt(0).toUpperCase() + serverName.slice(1),
+        name: getServerName(server),
         icon: '🌐',
         server: server,
         ip: '191.241.242.89', // IP simulado

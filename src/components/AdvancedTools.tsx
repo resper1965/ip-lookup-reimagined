@@ -1,7 +1,7 @@
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Globe, Route, Shield, Search, Network, Eye, Lock, Activity } from "lucide-react";
+import { Globe, Activity, Shield, Search, Network, Eye, Lock } from "lucide-react";
 
 interface AdvancedTool {
   title: string;
@@ -14,52 +14,52 @@ const AdvancedTools = () => {
     {
       title: "Global Latency Test",
       description: "Global Ping value test",
-      icon: <Activity className="w-8 h-8" strokeWidth={1.5} />
+      icon: <Activity className="w-6 h-6" strokeWidth={1.5} />
     },
     {
       title: "MTR Test",
       description: "Global MTR route test",
-      icon: <Route className="w-8 h-8" strokeWidth={1.5} />
+      icon: <Network className="w-6 h-6" strokeWidth={1.5} />
     },
     {
       title: "Rule Test",
       description: "Check the rule settings of proxy software",
-      icon: <Shield className="w-8 h-8" strokeWidth={1.5} />
+      icon: <Shield className="w-6 h-6" strokeWidth={1.5} />
     },
     {
       title: "DNS Resolution",
       description: "Real-time multi-channel DNS resolution",
-      icon: <Network className="w-8 h-8" strokeWidth={1.5} />
+      icon: <Globe className="w-6 h-6" strokeWidth={1.5} />
     },
     {
       title: "Censorship Check",
       description: "Check if a website is blocked in some countries",
-      icon: <Lock className="w-8 h-8" strokeWidth={1.5} />
+      icon: <Lock className="w-6 h-6" strokeWidth={1.5} />
     },
     {
       title: "Whois Search",
       description: "Search for domain/IP registration information",
-      icon: <Search className="w-8 h-8" strokeWidth={1.5} />
+      icon: <Search className="w-6 h-6" strokeWidth={1.5} />
     },
     {
       title: "MAC Lookup",
       description: "Query information of a physical address",
-      icon: <Network className="w-8 h-8" strokeWidth={1.5} />
+      icon: <Network className="w-6 h-6" strokeWidth={1.5} />
     },
     {
       title: "Browser Information",
       description: "Check browser information and fingerprint",
-      icon: <Globe className="w-8 h-8" strokeWidth={1.5} />
+      icon: <Globe className="w-6 h-6" strokeWidth={1.5} />
     },
     {
       title: "Security Checklist",
       description: "Guide to securing your digital life",
-      icon: <Shield className="w-8 h-8" strokeWidth={1.5} />
+      icon: <Shield className="w-6 h-6" strokeWidth={1.5} />
     },
     {
       title: "Invisibility Test",
       description: "Check if you are using a proxy or VPN",
-      icon: <Eye className="w-8 h-8" strokeWidth={1.5} />
+      icon: <Eye className="w-6 h-6" strokeWidth={1.5} />
     }
   ];
 
@@ -72,7 +72,7 @@ const AdvancedTools = () => {
     <div className="space-y-8">
       <div className="text-center space-y-4">
         <div className="flex items-center justify-center gap-3">
-          <div className="text-4xl">🛠️</div>
+          <div className="text-4xl">⚙️</div>
           <h1 className="text-4xl font-bold text-white">Advanced Tools</h1>
         </div>
         <p className="text-gray-300 max-w-4xl mx-auto">
