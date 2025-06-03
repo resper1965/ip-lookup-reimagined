@@ -3,7 +3,7 @@ import { Button } from '@/components/ui/button';
 import { useLanguage } from "@/contexts/LanguageContext";
 import LanguageSelector from './LanguageSelector';
 import Logo from './Logo';
-import { Settings } from 'lucide-react';
+import { Settings, Globe, Link, Video, Search, Zap, Wrench } from 'lucide-react';
 
 interface NavigationProps {
   activeTab: string;
@@ -16,12 +16,12 @@ const Navigation = ({ activeTab, onTabChange, onSettingsClick }: NavigationProps
   const { t } = useLanguage();
 
   const tabs = [
-    { id: 'ip-infos', label: t('nav.ip-infos'), icon: '🌐' },
-    { id: 'connectivity', label: t('nav.connectivity'), icon: '🔗' },
-    { id: 'webrtc', label: t('nav.webrtc'), icon: '📹' },
-    { id: 'dns-leak', label: t('nav.dns-leak'), icon: '🔍' },
-    { id: 'speed-test', label: t('nav.speed-test'), icon: '⚡' },
-    { id: 'advanced', label: t('nav.advanced'), icon: '🛠️' }
+    { id: 'ip-infos', label: t('nav.ip-infos'), Icon: Globe },
+    { id: 'connectivity', label: t('nav.connectivity'), Icon: Link },
+    { id: 'webrtc', label: t('nav.webrtc'), Icon: Video },
+    { id: 'dns-leak', label: t('nav.dns-leak'), Icon: Search },
+    { id: 'speed-test', label: t('nav.speed-test'), Icon: Zap },
+    { id: 'advanced', label: t('nav.advanced'), Icon: Wrench }
   ];
 
   return (
@@ -46,7 +46,7 @@ const Navigation = ({ activeTab, onTabChange, onSettingsClick }: NavigationProps
                     : 'text-gray-300 hover:text-white hover:bg-slate-700'
                 }`}
               >
-                <span className="mr-1">{tab.icon}</span>
+                <tab.Icon className="w-4 h-4 mr-1" strokeWidth={1} />
                 {tab.label}
               </Button>
             ))}
@@ -80,7 +80,7 @@ const Navigation = ({ activeTab, onTabChange, onSettingsClick }: NavigationProps
                     : 'text-gray-300 hover:text-white hover:bg-slate-700'
                 }`}
               >
-                <span className="mr-0.5">{tab.icon}</span>
+                <tab.Icon className="w-4 h-4 mr-0.5" strokeWidth={1} />
                 {tab.label}
               </Button>
             ))}
