@@ -11,6 +11,7 @@ import AdvancedTools from "@/components/AdvancedTools";
 import LoginPage from "@/components/LoginPage";
 import SettingsModal from "@/components/SettingsModal";
 import PWAInstallPrompt from "@/components/PWAInstallPrompt";
+import Footer from "@/components/Footer";
 import { SettingsData } from "@/components/SettingsModal";
 import { useState } from "react";
 
@@ -28,7 +29,7 @@ const AppContent = () => {
   };
 
   return (
-    <div className="min-h-screen bg-slate-900 text-white">
+    <div className="min-h-screen bg-slate-900 text-white flex flex-col">
       {isAuthenticated ? (
         <>
           <Navigation 
@@ -37,7 +38,7 @@ const AppContent = () => {
             onSettingsClick={() => setIsSettingsOpen(true)}
           />
           
-          <main className="container mx-auto px-4 py-8">
+          <main className="container mx-auto px-4 py-8 flex-1">
             {activeTab === 'ip-infos' && <IPInfos />}
             {activeTab === 'connectivity' && <ConnectivityTest />}
             {activeTab === 'webrtc' && <WebRTCTest />}
@@ -45,6 +46,8 @@ const AppContent = () => {
             {activeTab === 'speed-test' && <SpeedTest />}
             {activeTab === 'advanced' && <AdvancedTools />}
           </main>
+
+          <Footer />
 
           {isSettingsOpen && (
             <SettingsModal 
@@ -58,7 +61,12 @@ const AppContent = () => {
           <PWAInstallPrompt />
         </>
       ) : (
-        <LoginPage />
+        <div className="flex flex-col min-h-screen">
+          <div className="flex-1">
+            <LoginPage />
+          </div>
+          <Footer />
+        </div>
       )}
     </div>
   );
