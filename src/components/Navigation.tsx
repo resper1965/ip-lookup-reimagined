@@ -46,7 +46,7 @@ const Navigation = ({ activeTab, onTabChange, onSettingsClick }: NavigationProps
                     : 'text-gray-300 hover:text-white hover:bg-slate-700'
                 }`}
               >
-                <span className="mr-2">{tab.icon}</span>
+                <span className="mr-1.5">{tab.icon}</span>
                 {tab.label}
               </Button>
             ))}
@@ -61,7 +61,7 @@ const Navigation = ({ activeTab, onTabChange, onSettingsClick }: NavigationProps
               onClick={onSettingsClick}
               className="text-gray-300 hover:text-white hover:bg-slate-700"
             >
-              <Settings className="w-4 h-4" />
+              <Settings className="w-4 h-4" strokeWidth={1.5} />
             </Button>
           </div>
         </div>
