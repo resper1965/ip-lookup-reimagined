@@ -1,6 +1,7 @@
 
 import { useState } from "react";
 import { AuthProvider, useAuth } from "@/contexts/AuthContext";
+import { LanguageProvider, useLanguage } from "@/contexts/LanguageContext";
 import Navigation from "@/components/Navigation";
 import IPInfos from "@/components/IPInfos";
 import ConnectivityTest from "@/components/ConnectivityTest";
@@ -10,11 +11,10 @@ import SpeedTest from "@/components/SpeedTest";
 import AdvancedToolsImplemented from "@/components/AdvancedToolsImplemented";
 import LoginPage from "@/components/LoginPage";
 import AdminPanel from "@/components/AdminPanel";
-import { Button } from "@/components/ui/button";
-import { Settings } from "lucide-react";
 
 const AppContent = () => {
   const { isAuthenticated } = useAuth();
+  const { t } = useLanguage();
   const [activeTab, setActiveTab] = useState('ip-infos');
   const [showAdminPanel, setShowAdminPanel] = useState(false);
 
@@ -60,27 +60,21 @@ const AppContent = () => {
       </div>
       
       <div className="relative z-10">
-        <div className="flex items-center justify-between">
-          <Navigation activeTab={activeTab} onTabChange={setActiveTab} />
-          <Button
-            onClick={() => setShowAdminPanel(true)}
-            variant="ghost"
-            size="sm"
-            className="absolute top-4 right-4 text-white hover:bg-white/10 z-50"
-          >
-            <Settings className="w-4 h-4" strokeWidth={1.5} />
-          </Button>
-        </div>
+        <Navigation 
+          activeTab={activeTab} 
+          onTabChange={setActiveTab}
+          onSettingsClick={() => setShowAdminPanel(true)}
+        />
         
-        <div className="container mx-auto px-4 py-12">
+        <div className="container mx-auto px-4 py-6 sm:py-12">
           {renderContent()}
         </div>
         
         <footer className="text-center py-8 text-gray-400 text-sm space-y-2 border-t border-white/10">
-          <p>© 2025 n.Network - Real-time network analysis</p>
-          <p className="text-xs">Tool for detailed connectivity and network information analysis</p>
+          <p>{t('footer.copyright')}</p>
+          <p className="text-xs">{t('footer.description')}</p>
           <p className="text-xs mt-4">
-            powered by{' '}
+            {t('footer.powered')}{' '}
             <span className="font-montserrat">
               ness<span className="font-bold text-brand-cyan">.</span>
             </span>
@@ -94,7 +88,9 @@ const AppContent = () => {
 const Index = () => {
   return (
     <AuthProvider>
-      <AppContent />
+      <LanguageProvider>
+        <AppContent />
+      </LanguageProvider>
     </AuthProvider>
   );
 };
