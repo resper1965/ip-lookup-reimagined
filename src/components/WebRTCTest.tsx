@@ -106,9 +106,6 @@ const WebRTCTest = () => {
         <p className="text-gray-300 max-w-4xl mx-auto text-sm sm:text-base px-4">
           {t('webrtc.description')}
         </p>
-        <div className="text-white text-sm">
-          Debug: {servers.length} servidores carregados
-        </div>
       </div>
 
       {servers.length === 0 ? (
