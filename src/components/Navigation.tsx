@@ -56,27 +56,14 @@ const Navigation = ({ activeTab, onTabChange, onSettingsClick }: NavigationProps
   return (
     <nav className="bg-white/5 backdrop-blur-sm border-b border-white/10 sticky top-0 z-50 font-montserrat">
       <div className="container mx-auto px-4">
-        {/* Desktop Navigation */}
-        <div className="hidden lg:block">
-          {/* Logo and Settings Row */}
-          <div className="flex items-center justify-between py-3">
-            <div className="flex items-center">
-              <Logo />
-            </div>
-            
-            <div className="flex items-center space-x-3">
-              <LanguageSelector />
-              <button
-                onClick={onSettingsClick}
-                className="flex items-center space-x-2 px-3 py-2 rounded-lg text-gray-300 hover:bg-white/10 hover:text-white transition-all duration-200"
-              >
-                <Settings className="w-4 h-4" strokeWidth={1} />
-              </button>
-            </div>
+        {/* Desktop Navigation - Single Row */}
+        <div className="hidden lg:flex items-center justify-between py-4">
+          <div className="flex items-center">
+            <Logo />
           </div>
           
-          {/* Menu Row */}
-          <div className="flex items-center justify-center space-x-1 pb-3">
+          {/* Menu Items in the Center */}
+          <div className="flex items-center space-x-1">
             {tabs.map(tab => {
               const Icon = tab.icon;
               return (
@@ -85,7 +72,7 @@ const Navigation = ({ activeTab, onTabChange, onSettingsClick }: NavigationProps
                   onClick={() => onTabChange(tab.id)} 
                   className={`flex items-center space-x-2 px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 whitespace-nowrap font-montserrat ${
                     activeTab === tab.id 
-                      ? 'bg-brand-cyan/20 text-brand-cyan border border-brand-cyan/30' 
+                      ? 'bg-blue-500/20 text-blue-400 border border-blue-500/30' 
                       : 'text-gray-300 hover:bg-white/10 hover:text-white'
                   }`}
                 >
@@ -94,6 +81,17 @@ const Navigation = ({ activeTab, onTabChange, onSettingsClick }: NavigationProps
                 </button>
               );
             })}
+          </div>
+          
+          {/* Right Side - Language and Settings */}
+          <div className="flex items-center space-x-3">
+            <LanguageSelector />
+            <button
+              onClick={onSettingsClick}
+              className="flex items-center space-x-2 px-3 py-2 rounded-lg text-gray-300 hover:bg-white/10 hover:text-white transition-all duration-200"
+            >
+              <Settings className="w-4 h-4" strokeWidth={1} />
+            </button>
           </div>
         </div>
 
@@ -130,7 +128,7 @@ const Navigation = ({ activeTab, onTabChange, onSettingsClick }: NavigationProps
                       onClick={() => handleTabClick(tab.id)} 
                       className={`flex items-center space-x-3 px-4 py-3 rounded-lg text-sm font-medium transition-all duration-200 w-full text-left font-montserrat ${
                         activeTab === tab.id 
-                          ? 'bg-brand-cyan/20 text-brand-cyan border border-brand-cyan/30' 
+                          ? 'bg-blue-500/20 text-blue-400 border border-blue-500/30' 
                           : 'text-gray-300 hover:bg-white/10 hover:text-white'
                       }`}
                     >
