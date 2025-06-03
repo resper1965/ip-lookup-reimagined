@@ -1,5 +1,6 @@
 
 import { useLanguage } from "@/contexts/LanguageContext";
+import Logo from "./Logo";
 
 const Footer = () => {
   const { t } = useLanguage();
@@ -14,9 +15,13 @@ const Footer = () => {
           <p className="text-xs text-slate-400">
             {t('footer.description')}
           </p>
-          <p className="text-xs text-slate-500 font-montserrat">
-            {t('footer.powered')} <span className="text-white">ness</span><span className="font-bold" style={{ color: '#00ade0' }}>.</span>
-          </p>
+          <div className="flex justify-center items-center text-xs text-slate-500">
+            <span className="mr-1">{t('footer.powered')}</span>
+            <div className="flex items-center space-x-1 font-montserrat">
+              <span className="text-white">ness</span>
+              <span className="text-[#00ade0] font-bold">.</span>
+            </div>
+          </div>
         </div>
       </div>
     </footer>

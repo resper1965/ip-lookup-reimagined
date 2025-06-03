@@ -2,6 +2,7 @@
 import { Button } from '@/components/ui/button';
 import { useLanguage } from "@/contexts/LanguageContext";
 import LanguageSelector from './LanguageSelector';
+import Logo from './Logo';
 import { Settings } from 'lucide-react';
 
 interface NavigationProps {
@@ -29,7 +30,7 @@ const Navigation = ({ activeTab, onTabChange, onSettingsClick }: NavigationProps
         <div className="flex items-center justify-between py-4">
           {/* Logo */}
           <div className="flex items-center">
-            <h1 className="text-2xl font-bold text-white">n.Network</h1>
+            <Logo />
           </div>
 
           {/* Menu centralizado - desktop */}
