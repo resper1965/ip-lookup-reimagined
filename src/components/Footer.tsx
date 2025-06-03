@@ -15,7 +15,7 @@ const Footer = () => {
             {t('footer.description')}
           </p>
           <p className="text-xs text-slate-500">
-            {t('footer.powered')} <span className="text-slate-300 font-medium">ness</span>.
+            {t('footer.powered')} <span className="font-bold" style={{ color: '#00ade0' }}>ness</span>.
           </p>
         </div>
       </div>
