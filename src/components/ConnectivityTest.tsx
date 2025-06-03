@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { RefreshCw, Wifi } from "lucide-react";
 import { useState, useEffect } from "react";
 import { useNetworkSettings } from "@/hooks/useNetworkSettings";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 interface ConnectivitySite {
   name: string;
@@ -14,6 +15,7 @@ interface ConnectivitySite {
 }
 
 const ConnectivityTest = () => {
+  const { t } = useLanguage();
   const [isLoading, setIsLoading] = useState(false);
   const [sites, setSites] = useState<ConnectivitySite[]>([]);
   const {
@@ -97,8 +99,8 @@ const ConnectivityTest = () => {
     <div className="space-y-8">
       <div className="text-center space-y-4">
         <div className="flex items-center justify-center gap-3">
-          <Wifi className="w-12 h-12 text-gray-300" strokeWidth={1} />
-          <h1 className="text-4xl font-bold text-white">Network Connectivity</h1>
+          <Wifi className="w-8 h-8 sm:w-12 sm:h-12 text-gray-300" strokeWidth={1} />
+          <h1 className="text-2xl sm:text-4xl font-bold text-white">{t('connectivity.title')}</h1>
           <Button 
             onClick={runTest}
             disabled={isLoading}
@@ -109,27 +111,26 @@ const ConnectivityTest = () => {
             <RefreshCw className={`w-4 h-4 ${isLoading ? 'animate-spin' : ''}`} strokeWidth={1} />
           </Button>
         </div>
-        <p className="text-gray-300 max-w-4xl mx-auto">
-          Testing is done by loading small images from corresponding websites. 
-          Delay values are for reference only and will be smaller in reality.
+        <p className="text-gray-300 max-w-4xl mx-auto text-sm sm:text-base px-4">
+          {t('connectivity.description')}
         </p>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 px-4 sm:px-0">
         {sites.map((site, index) => (
           <Card key={index} className="bg-white/5 backdrop-blur-sm border border-white/10 hover:bg-white/10 transition-all duration-300">
             <CardHeader className="pb-3">
-              <CardTitle className="text-white flex items-center gap-3">
+              <CardTitle className="text-white flex items-center gap-3 text-sm sm:text-lg">
                 <span className="text-lg">{site.icon}</span>
                 {site.name}
               </CardTitle>
             </CardHeader>
             <CardContent>
               <div className="flex items-center justify-between">
-                <span className={`font-bold ${getStatusColor(site.status)}`}>
+                <span className={`font-bold text-sm sm:text-base ${getStatusColor(site.status)}`}>
                   {site.status}
                 </span>
-                <span className={`text-lg font-mono ${getStatusColor(site.status)}`}>
+                <span className={`text-sm sm:text-lg font-mono ${getStatusColor(site.status)}`}>
                   {site.latency} ms
                 </span>
               </div>

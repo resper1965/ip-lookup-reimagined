@@ -5,6 +5,7 @@ import { Badge } from "@/components/ui/badge";
 import { RefreshCw, MapPin, Network } from "lucide-react";
 import { useState, useEffect } from "react";
 import { useNetworkSettings } from "@/hooks/useNetworkSettings";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 interface WebRTCServer {
   name: string;
@@ -16,6 +17,7 @@ interface WebRTCServer {
 }
 
 const WebRTCTest = () => {
+  const { t } = useLanguage();
   const [isLoading, setIsLoading] = useState(false);
   const [servers, setServers] = useState<WebRTCServer[]>([]);
   const { settings } = useNetworkSettings();
@@ -58,8 +60,8 @@ const WebRTCTest = () => {
     <div className="space-y-8">
       <div className="text-center space-y-4">
         <div className="flex items-center justify-center gap-3">
-          <Network className="w-12 h-12 text-gray-300" strokeWidth={1} />
-          <h1 className="text-4xl font-bold text-white">WebRTC Test</h1>
+          <Network className="w-8 h-8 sm:w-12 sm:h-12 text-gray-300" strokeWidth={1} />
+          <h1 className="text-2xl sm:text-4xl font-bold text-white">{t('webrtc.title')}</h1>
           <Button 
             onClick={runTest}
             disabled={isLoading}
@@ -70,34 +72,31 @@ const WebRTCTest = () => {
             <RefreshCw className={`w-4 h-4 ${isLoading ? 'animate-spin' : ''}`} strokeWidth={1} />
           </Button>
         </div>
-        <p className="text-gray-300 max-w-4xl mx-auto">
-          WebRTC often establishes connections directly via UDP. If the test returns your real IP, 
-          it means your proxy settings do not cover these connections. In addition to detecting the IP 
-          you use when connecting to WebRTC, we also detect your NAT type. However, NAT type detection 
-          is not 100% accurate and is for reference only.
+        <p className="text-gray-300 max-w-4xl mx-auto text-sm sm:text-base px-4">
+          {t('webrtc.description')}
         </p>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 px-4 sm:px-0">
         {servers.map((server, index) => (
           <Card key={index} className="bg-white/5 backdrop-blur-sm border border-white/10">
             <CardHeader className="pb-3">
-              <CardTitle className="text-white flex items-center gap-3">
-                <span className="text-2xl">{server.icon}</span>
+              <CardTitle className="text-white flex items-center gap-3 text-sm sm:text-lg">
+                <span className="text-xl sm:text-2xl">{server.icon}</span>
                 {server.name}
               </CardTitle>
-              <div className="text-xs text-gray-400 font-mono">{server.server}</div>
+              <div className="text-xs text-gray-400 font-mono break-all">{server.server}</div>
             </CardHeader>
             <CardContent className="space-y-4">
               <div className="bg-black/20 p-3 rounded-lg">
-                <div className="text-blue-200 font-mono text-lg">{server.ip}</div>
+                <div className="text-blue-200 font-mono text-sm sm:text-lg break-all">{server.ip}</div>
               </div>
               
               <div className="bg-green-500/10 border border-green-500/20 p-3 rounded-lg space-y-2">
-                <div className="text-green-400 font-medium">NAT: {server.natType}</div>
+                <div className="text-green-400 font-medium text-xs sm:text-sm">{t('webrtc.nat')}: {server.natType}</div>
                 <div className="flex items-center gap-2 text-green-300">
-                  <MapPin className="w-4 h-4" strokeWidth={1} />
-                  <span className="text-sm">Region: {server.region}</span>
+                  <MapPin className="w-4 h-4 flex-shrink-0" strokeWidth={1} />
+                  <span className="text-xs sm:text-sm">{t('webrtc.region')}: {server.region}</span>
                 </div>
               </div>
             </CardContent>
