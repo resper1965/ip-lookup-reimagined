@@ -6,11 +6,7 @@ import { useAuth } from '@/contexts/AuthContext';
 import { useToast } from '@/hooks/use-toast';
 import { ArrowLeft } from 'lucide-react';
 
-interface LoginPageProps {
-  onBackToApp?: () => void;
-}
-
-const LoginPage = ({ onBackToApp }: LoginPageProps) => {
+const LoginPage = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [isLoading, setIsLoading] = useState(false);
@@ -43,12 +39,8 @@ const LoginPage = ({ onBackToApp }: LoginPageProps) => {
   };
 
   const handleBackToApp = () => {
-    if (onBackToApp) {
-      onBackToApp();
-    } else {
-      // Recarregar a página para voltar à aplicação principal
-      window.location.reload();
-    }
+    // Recarregar a página para voltar à aplicação principal
+    window.location.reload();
   };
 
   return (

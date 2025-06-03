@@ -1,6 +1,6 @@
 
-import { useState } from "react";
 import { LanguageProvider } from "@/contexts/LanguageContext";
+import { AuthProvider, useAuth } from "@/contexts/AuthContext";
 import Navigation from "@/components/Navigation";
 import IPInfos from "@/components/IPInfos";
 import ConnectivityTest from "@/components/ConnectivityTest";
@@ -12,9 +12,10 @@ import LoginPage from "@/components/LoginPage";
 import SettingsModal from "@/components/SettingsModal";
 import PWAInstallPrompt from "@/components/PWAInstallPrompt";
 import { SettingsData } from "@/components/SettingsModal";
+import { useState } from "react";
 
-const Index = () => {
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
+const AppContent = () => {
+  const { isAuthenticated } = useAuth();
   const [activeTab, setActiveTab] = useState('ip-infos');
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
   const [settings, setSettings] = useState<SettingsData>({
@@ -27,40 +28,48 @@ const Index = () => {
   };
 
   return (
-    <LanguageProvider>
-      <div className="min-h-screen bg-gradient-to-br from-slate-900 via-blue-900 to-slate-900 text-white">
-        {isAuthenticated ? (
-          <>
-            <Navigation 
-              activeTab={activeTab} 
-              onTabChange={setActiveTab}
-              onSettingsClick={() => setIsSettingsOpen(true)}
+    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-blue-900 to-slate-900 text-white">
+      {isAuthenticated ? (
+        <>
+          <Navigation 
+            activeTab={activeTab} 
+            onTabChange={setActiveTab}
+            onSettingsClick={() => setIsSettingsOpen(true)}
+          />
+          
+          <main className="container mx-auto px-4 py-8">
+            {activeTab === 'ip-infos' && <IPInfos />}
+            {activeTab === 'connectivity' && <ConnectivityTest />}
+            {activeTab === 'webrtc' && <WebRTCTest />}
+            {activeTab === 'dns-leak' && <DNSLeakTest />}
+            {activeTab === 'speed-test' && <SpeedTest />}
+            {activeTab === 'advanced' && <AdvancedTools />}
+          </main>
+
+          {isSettingsOpen && (
+            <SettingsModal 
+              isOpen={isSettingsOpen}
+              onClose={() => setIsSettingsOpen(false)}
+              onSave={handleSettingsSave}
+              currentSettings={settings}
             />
-            
-            <main className="container mx-auto px-4 py-8">
-              {activeTab === 'ip-infos' && <IPInfos />}
-              {activeTab === 'connectivity' && <ConnectivityTest />}
-              {activeTab === 'webrtc' && <WebRTCTest />}
-              {activeTab === 'dns-leak' && <DNSLeakTest />}
-              {activeTab === 'speed-test' && <SpeedTest />}
-              {activeTab === 'advanced' && <AdvancedTools />}
-            </main>
+          )}
 
-            {isSettingsOpen && (
-              <SettingsModal 
-                isOpen={isSettingsOpen}
-                onClose={() => setIsSettingsOpen(false)}
-                onSave={handleSettingsSave}
-                currentSettings={settings}
-              />
-            )}
+          <PWAInstallPrompt />
+        </>
+      ) : (
+        <LoginPage />
+      )}
+    </div>
+  );
+};
 
-            <PWAInstallPrompt />
-          </>
-        ) : (
-          <LoginPage onBackToApp={() => setIsAuthenticated(true)} />
-        )}
-      </div>
+const Index = () => {
+  return (
+    <LanguageProvider>
+      <AuthProvider>
+        <AppContent />
+      </AuthProvider>
     </LanguageProvider>
   );
 };
