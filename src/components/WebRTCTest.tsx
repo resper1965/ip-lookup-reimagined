@@ -14,6 +14,8 @@ interface WebRTCServer {
   ip: string;
   natType: string;
   region: string;
+  latency: number | null;
+  isLoading: boolean;
 }
 
 const WebRTCTest = () => {
@@ -35,6 +37,64 @@ const WebRTCTest = () => {
     return hostname.charAt(0).toUpperCase() + hostname.slice(1);
   };
 
+  const measureLatencyToSTUN = async (stunUrl: string): Promise<number | null> => {
+    return new Promise((resolve) => {
+      const startTime = Date.now();
+      
+      try {
+        const pc = new RTCPeerConnection({
+          iceServers: [{ urls: stunUrl }]
+        });
+
+        let resolved = false;
+
+        const timeout = setTimeout(() => {
+          if (!resolved) {
+            resolved = true;
+            pc.close();
+            resolve(null);
+          }
+        }, 10000); // 10 segundos timeout
+
+        pc.onicecandidate = (event) => {
+          if (event.candidate && event.candidate.candidate.includes('srflx') && !resolved) {
+            resolved = true;
+            clearTimeout(timeout);
+            const latency = Date.now() - startTime;
+            pc.close();
+            resolve(latency);
+          }
+        };
+
+        pc.onicegatheringstatechange = () => {
+          if (pc.iceGatheringState === 'complete' && !resolved) {
+            resolved = true;
+            clearTimeout(timeout);
+            const latency = Date.now() - startTime;
+            pc.close();
+            resolve(latency);
+          }
+        };
+
+        // Criar oferta para iniciar coleta de candidatos ICE
+        pc.createOffer()
+          .then(offer => pc.setLocalDescription(offer))
+          .catch(() => {
+            if (!resolved) {
+              resolved = true;
+              clearTimeout(timeout);
+              pc.close();
+              resolve(null);
+            }
+          });
+
+      } catch (error) {
+        console.error('Erro ao medir latência STUN:', error);
+        resolve(null);
+      }
+    });
+  };
+
   useEffect(() => {
     // Mapear os servidores STUN configurados para o formato do componente
     const mappedServers = settings.stunServers.map((server, index) => {
@@ -44,7 +104,9 @@ const WebRTCTest = () => {
         server: server,
         ip: '191.241.242.89', // IP simulado
         natType: 'Port Restricted Cone or Symmetric',
-        region: 'Brazil 🇧🇷'
+        region: 'Brazil 🇧🇷',
+        latency: null,
+        isLoading: false
       };
     });
     setServers(mappedServers);
@@ -52,8 +114,43 @@ const WebRTCTest = () => {
 
   const runTest = async () => {
     setIsLoading(true);
-    await new Promise(resolve => setTimeout(resolve, 3000));
+    
+    // Marcar todos os servidores como carregando
+    setServers(prev => prev.map(server => ({ ...server, isLoading: true, latency: null })));
+
+    // Testar cada servidor sequencialmente
+    for (let i = 0; i < servers.length; i++) {
+      const server = servers[i];
+      console.log(`Testando latência para ${server.name}: ${server.server}`);
+      
+      const latency = await measureLatencyToSTUN(server.server);
+      
+      setServers(prev => prev.map((s, index) => {
+        if (index === i) {
+          return { ...s, latency, isLoading: false };
+        }
+        return s;
+      }));
+
+      // Pequena pausa entre testes para não sobrecarregar
+      await new Promise(resolve => setTimeout(resolve, 500));
+    }
+
     setIsLoading(false);
+  };
+
+  const getLatencyColor = (latency: number | null) => {
+    if (latency === null) return 'text-gray-400';
+    if (latency < 100) return 'text-green-400';
+    if (latency < 300) return 'text-yellow-400';
+    return 'text-red-400';
+  };
+
+  const getLatencyStatus = (latency: number | null) => {
+    if (latency === null) return 'TIMEOUT';
+    if (latency < 100) return 'EXCELENTE';
+    if (latency < 300) return 'BOM';
+    return 'LENTO';
   };
 
   return (
@@ -90,6 +187,22 @@ const WebRTCTest = () => {
             <CardContent className="space-y-4">
               <div className="bg-black/20 p-3 rounded-lg">
                 <div className="text-blue-200 font-mono text-sm sm:text-lg break-all">{server.ip}</div>
+              </div>
+              
+              {/* Informações de Latência */}
+              <div className="bg-blue-500/10 border border-blue-500/20 p-3 rounded-lg space-y-2">
+                <div className="text-blue-400 font-medium text-xs sm:text-sm">
+                  Latência: {server.isLoading ? (
+                    <span className="text-gray-400">Testando...</span>
+                  ) : (
+                    <span className={getLatencyColor(server.latency)}>
+                      {server.latency !== null ? `${server.latency} ms` : 'Timeout'}
+                    </span>
+                  )}
+                </div>
+                <div className={`text-xs sm:text-sm font-bold ${getLatencyColor(server.latency)}`}>
+                  {server.isLoading ? 'TESTANDO...' : getLatencyStatus(server.latency)}
+                </div>
               </div>
               
               <div className="bg-green-500/10 border border-green-500/20 p-3 rounded-lg space-y-2">
