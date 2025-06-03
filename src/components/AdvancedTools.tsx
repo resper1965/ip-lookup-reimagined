@@ -7,7 +7,6 @@ interface AdvancedTool {
   title: string;
   description: string;
   icon: React.ReactNode;
-  color: string;
 }
 
 const AdvancedTools = () => {
@@ -15,62 +14,52 @@ const AdvancedTools = () => {
     {
       title: "Global Latency Test",
       description: "Global Ping value test",
-      icon: <Activity className="w-8 h-8" />,
-      color: "text-purple-400"
+      icon: <Activity className="w-8 h-8" strokeWidth={1.5} />
     },
     {
       title: "MTR Test",
       description: "Global MTR route test",
-      icon: <Route className="w-8 h-8" />,
-      color: "text-blue-400"
+      icon: <Route className="w-8 h-8" strokeWidth={1.5} />
     },
     {
       title: "Rule Test",
       description: "Check the rule settings of proxy software",
-      icon: <Shield className="w-8 h-8" />,
-      color: "text-green-400"
+      icon: <Shield className="w-8 h-8" strokeWidth={1.5} />
     },
     {
       title: "DNS Resolution",
       description: "Real-time multi-channel DNS resolution",
-      icon: <Network className="w-8 h-8" />,
-      color: "text-cyan-400"
+      icon: <Network className="w-8 h-8" strokeWidth={1.5} />
     },
     {
       title: "Censorship Check",
       description: "Check if a website is blocked in some countries",
-      icon: <Lock className="w-8 h-8" />,
-      color: "text-orange-400"
+      icon: <Lock className="w-8 h-8" strokeWidth={1.5} />
     },
     {
       title: "Whois Search",
       description: "Search for domain/IP registration information",
-      icon: <Search className="w-8 h-8" />,
-      color: "text-pink-400"
+      icon: <Search className="w-8 h-8" strokeWidth={1.5} />
     },
     {
       title: "MAC Lookup",
       description: "Query information of a physical address",
-      icon: <Network className="w-8 h-8" />,
-      color: "text-indigo-400"
+      icon: <Network className="w-8 h-8" strokeWidth={1.5} />
     },
     {
       title: "Browser Information",
       description: "Check browser information and fingerprint",
-      icon: <Globe className="w-8 h-8" />,
-      color: "text-blue-400"
+      icon: <Globe className="w-8 h-8" strokeWidth={1.5} />
     },
     {
       title: "Security Checklist",
       description: "Guide to securing your digital life",
-      icon: <Shield className="w-8 h-8" />,
-      color: "text-red-400"
+      icon: <Shield className="w-8 h-8" strokeWidth={1.5} />
     },
     {
       title: "Invisibility Test",
       description: "Check if you are using a proxy or VPN",
-      icon: <Eye className="w-8 h-8" />,
-      color: "text-yellow-400"
+      icon: <Eye className="w-8 h-8" strokeWidth={1.5} />
     }
   ];
 
@@ -99,7 +88,7 @@ const AdvancedTools = () => {
             onClick={() => handleToolClick(tool.title)}
           >
             <CardHeader className="text-center">
-              <div className={`${tool.color} group-hover:scale-110 transition-transform duration-300 flex justify-center mb-3`}>
+              <div className="text-gray-300 group-hover:text-white group-hover:scale-110 transition-all duration-300 flex justify-center mb-3">
                 {tool.icon}
               </div>
               <CardTitle className="text-white text-lg group-hover:text-blue-300 transition-colors">

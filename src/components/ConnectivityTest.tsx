@@ -80,7 +80,7 @@ const ConnectivityTest = () => {
             variant="ghost"
             className="text-white hover:bg-white/10"
           >
-            <RefreshCw className={`w-4 h-4 ${isLoading ? 'animate-spin' : ''}`} />
+            <RefreshCw className={`w-4 h-4 ${isLoading ? 'animate-spin' : ''}`} strokeWidth={1.5} />
           </Button>
         </div>
         <p className="text-gray-300 max-w-4xl mx-auto">

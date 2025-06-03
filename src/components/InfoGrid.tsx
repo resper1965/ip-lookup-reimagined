@@ -7,7 +7,6 @@ interface InfoItem {
   title: string;
   value: string;
   description: string;
-  color: string;
 }
 
 interface InfoGridProps {
@@ -24,46 +23,40 @@ interface InfoGridProps {
 const InfoGrid = ({ networkData }: InfoGridProps) => {
   const infoItems: InfoItem[] = [
     {
-      icon: <Clock className="w-6 h-6" />,
+      icon: <Clock className="w-6 h-6" strokeWidth={1.5} />,
       title: "Fuso Horário",
       value: networkData?.timezone || "UTC-3",
-      description: "Brasília, São Paulo",
-      color: "text-blue-400"
+      description: "Brasília, São Paulo"
     },
     {
-      icon: <Zap className="w-6 h-6" />,
+      icon: <Zap className="w-6 h-6" strokeWidth={1.5} />,
       title: "Velocidade",
       value: networkData?.speed || "Calculando...",
-      description: "Download estimado",
-      color: "text-yellow-400"
+      description: "Download estimado"
     },
     {
-      icon: <Eye className="w-6 h-6" />,
+      icon: <Eye className="w-6 h-6" strokeWidth={1.5} />,
       title: "Privacidade",
       value: networkData?.privacy || "Médio",
-      description: "Nível de exposição",
-      color: "text-purple-400"
+      description: "Nível de exposição"
     },
     {
-      icon: <Lock className="w-6 h-6" />,
+      icon: <Lock className="w-6 h-6" strokeWidth={1.5} />,
       title: "Segurança",
       value: networkData?.security || "Alta",
-      description: "Protocolo HTTPS",
-      color: "text-green-400"
+      description: "Protocolo HTTPS"
     },
     {
-      icon: <Server className="w-6 h-6" />,
+      icon: <Server className="w-6 h-6" strokeWidth={1.5} />,
       title: "Servidor",
       value: networkData?.server || "Detectando...",
-      description: "Servidor mais próximo",
-      color: "text-cyan-400"
+      description: "Servidor mais próximo"
     },
     {
-      icon: <Activity className="w-6 h-6" />,
+      icon: <Activity className="w-6 h-6" strokeWidth={1.5} />,
       title: "Latência",
       value: networkData?.latency || "Medindo...",
-      description: "Tempo de resposta",
-      color: "text-orange-400"
+      description: "Tempo de resposta"
     }
   ];
 
@@ -76,7 +69,7 @@ const InfoGrid = ({ networkData }: InfoGridProps) => {
         >
           <CardHeader className="pb-3">
             <div className="flex items-center space-x-3">
-              <div className={`${item.color} group-hover:scale-110 transition-transform duration-300`}>
+              <div className="text-gray-300 group-hover:text-white group-hover:scale-110 transition-all duration-300">
                 {item.icon}
               </div>
               <CardTitle className="text-sm font-medium text-gray-200">

@@ -68,7 +68,7 @@ const AppContent = () => {
             size="sm"
             className="absolute top-4 right-4 text-white hover:bg-white/10 z-50"
           >
-            <Settings className="w-4 h-4" />
+            <Settings className="w-4 h-4" strokeWidth={1.5} />
           </Button>
         </div>
         
