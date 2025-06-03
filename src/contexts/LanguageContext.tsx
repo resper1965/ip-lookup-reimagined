@@ -1,5 +1,4 @@
-
-import { createContext, useContext, useState, ReactNode } from 'react';
+import { createContext, useContext, useState, ReactNode, useEffect } from 'react';
 
 export type Language = 'en' | 'pt-br' | 'es' | 'de' | 'fr';
 
@@ -8,6 +7,8 @@ interface LanguageContextType {
   setLanguage: (language: Language) => void;
   t: (key: string) => string;
 }
+
+// ... keep existing code (translations object remains the same)
 
 const translations = {
   en: {
@@ -178,7 +179,7 @@ const translations = {
     
     // IP Infos
     'ip.title': 'Información IP',
-    'ip.description': 'El programa primero verificará su dirección IP desde diferentes fuentes (incluyendo IPv4 e IPv6), y luego consultará los datos geográficos correspondientes de la fuente de geolocalización IP que seleccionó. Si solo hay 1 pila IP, la fuente sin datos se mostrará como vacía.',
+    'ip.description': 'El programa primero verificará su dirección IP desde diferentes fuentes (incluyendo IPv4 y IPv6), y luego consultará los datos geográficos correspondientes de la fuente de geolocalización IP que seleccionó. Si solo hay 1 pila IP, la fuente sin datos se mostrará como vacía.',
     'ip.refresh': 'Actualizar',
     'ip.refreshing': 'Actualizando...',
     'ip.source': 'Fuente IP',
@@ -415,8 +416,18 @@ export const LanguageProvider = ({ children }: LanguageProviderProps) => {
   const [language, setLanguage] = useState<Language>('en');
 
   const t = (key: string): string => {
-    return translations[language][key] || key;
+    const translation = translations[language]?.[key];
+    if (!translation) {
+      console.warn(`Translation key "${key}" not found for language "${language}"`);
+      return key;
+    }
+    return translation;
   };
+
+  // Force re-render quando o idioma mudar
+  useEffect(() => {
+    console.log(`Language changed to: ${language}`);
+  }, [language]);
 
   return (
     <LanguageContext.Provider value={{ language, setLanguage, t }}>
