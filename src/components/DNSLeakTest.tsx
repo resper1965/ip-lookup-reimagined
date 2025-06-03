@@ -59,7 +59,7 @@ const DNSLeakTest = () => {
             variant="ghost"
             className="text-white hover:bg-white/10"
           >
-            <RefreshCw className={`w-4 h-4 ${isLoading ? 'animate-spin' : ''}`} strokeWidth={1.5} />
+            <RefreshCw className={`w-4 h-4 ${isLoading ? 'animate-spin' : ''}`} strokeWidth={1} />
           </Button>
         </div>
         <div className="text-gray-300 max-w-4xl mx-auto space-y-4">
@@ -92,11 +92,11 @@ const DNSLeakTest = () => {
               
               <div className="bg-green-500/10 border border-green-500/20 p-3 rounded-lg space-y-2">
                 <div className="flex items-center gap-2 text-green-300">
-                  <Globe className="w-4 h-4 text-gray-300" strokeWidth={1.5} />
+                  <Globe className="w-4 h-4 text-gray-300" strokeWidth={1} />
                   <span className="text-sm">ISP: {test.isp}</span>
                 </div>
                 <div className="flex items-center gap-2 text-green-300">
-                  <MapPin className="w-4 h-4 text-gray-300" strokeWidth={1.5} />
+                  <MapPin className="w-4 h-4 text-gray-300" strokeWidth={1} />
                   <span className="text-sm">Region: {test.region}</span>
                 </div>
               </div>

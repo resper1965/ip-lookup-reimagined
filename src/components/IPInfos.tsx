@@ -108,7 +108,7 @@ const IPInfos = () => {
           disabled={isLoading}
           className="bg-blue-500 hover:bg-blue-600"
         >
-          <RefreshCw className={`w-4 h-4 mr-2 ${isLoading ? 'animate-spin' : ''}`} />
+          <RefreshCw className={`w-4 h-4 mr-2 ${isLoading ? 'animate-spin' : ''}`} strokeWidth={1} />
           {isLoading ? 'Refreshing...' : 'Refresh'}
         </Button>
       </div>
@@ -123,7 +123,7 @@ const IPInfos = () => {
                   IP Source: {source.name}
                 </CardTitle>
                 <Button size="sm" variant="ghost" onClick={handleRefresh}>
-                  <RefreshCw className="w-4 h-4" />
+                  <RefreshCw className="w-4 h-4" strokeWidth={1} />
                 </Button>
               </div>
             </CardHeader>
@@ -143,41 +143,41 @@ const IPInfos = () => {
                       className="text-white hover:bg-white/10"
                     >
                       {copied === source.ip ? (
-                        <CheckCircle className="w-4 h-4 text-green-400" />
+                        <CheckCircle className="w-4 h-4 text-green-400" strokeWidth={1} />
                       ) : (
-                        <Copy className="w-4 h-4" />
+                        <Copy className="w-4 h-4" strokeWidth={1} />
                       )}
                     </Button>
                   </div>
 
                   <div className="space-y-3">
                     <div className="flex items-center gap-2 text-gray-200">
-                      <MapPin className="w-4 h-4 text-blue-400" />
+                      <MapPin className="w-4 h-4 text-blue-400" strokeWidth={1} />
                       <span className="text-sm">Region: {source.region}</span>
                     </div>
                     
                     <div className="flex items-center gap-2 text-gray-200">
-                      <Globe className="w-4 h-4 text-green-400" />
+                      <Globe className="w-4 h-4 text-green-400" strokeWidth={1} />
                       <span className="text-sm">State: {source.state}</span>
                     </div>
                     
                     <div className="flex items-center gap-2 text-gray-200">
-                      <MapPin className="w-4 h-4 text-purple-400" />
+                      <MapPin className="w-4 h-4 text-purple-400" strokeWidth={1} />
                       <span className="text-sm">City: {source.city}</span>
                     </div>
                     
                     <div className="flex items-center gap-2 text-gray-200">
-                      <Wifi className="w-4 h-4 text-orange-400" />
+                      <Wifi className="w-4 h-4 text-orange-400" strokeWidth={1} />
                       <span className="text-sm">ISP: {source.isp}</span>
                     </div>
                     
                     <div className="flex items-center gap-2 text-gray-200">
-                      <Activity className="w-4 h-4 text-cyan-400" />
+                      <Activity className="w-4 h-4 text-cyan-400" strokeWidth={1} />
                       <span className="text-sm">Type: {source.type}</span>
                     </div>
                     
                     <div className="flex items-center gap-2 text-gray-200">
-                      <Shield className="w-4 h-4 text-green-400" />
+                      <Shield className="w-4 h-4 text-green-400" strokeWidth={1} />
                       <span className="text-sm">Proxy: {source.proxy}</span>
                     </div>
                     
@@ -195,7 +195,7 @@ const IPInfos = () => {
                     </div>
                     
                     <div className="flex items-center gap-2 text-gray-200">
-                      <Activity className="w-4 h-4 text-pink-400" />
+                      <Activity className="w-4 h-4 text-pink-400" strokeWidth={1} />
                       <span className="text-sm">ASN: {source.asn}</span>
                     </div>
                   </div>

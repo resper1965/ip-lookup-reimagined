@@ -69,7 +69,7 @@ const LoginPage = ({ onBackToApp }: LoginPageProps) => {
         variant="ghost"
         className="absolute top-6 left-6 text-white hover:bg-white/10 z-50"
       >
-        <ArrowLeft className="w-4 h-4 mr-2" />
+        <ArrowLeft className="w-4 h-4 mr-2" strokeWidth={1} />
         Back to Application
       </Button>
 

@@ -14,52 +14,52 @@ const AdvancedTools = () => {
     {
       title: "Global Latency Test",
       description: "Global Ping value test",
-      icon: <Activity className="w-6 h-6" strokeWidth={1.5} />
+      icon: <Activity className="w-6 h-6" strokeWidth={1} />
     },
     {
       title: "MTR Test",
       description: "Global MTR route test",
-      icon: <Network className="w-6 h-6" strokeWidth={1.5} />
+      icon: <Network className="w-6 h-6" strokeWidth={1} />
     },
     {
       title: "Rule Test",
       description: "Check the rule settings of proxy software",
-      icon: <Shield className="w-6 h-6" strokeWidth={1.5} />
+      icon: <Shield className="w-6 h-6" strokeWidth={1} />
     },
     {
       title: "DNS Resolution",
       description: "Real-time multi-channel DNS resolution",
-      icon: <Globe className="w-6 h-6" strokeWidth={1.5} />
+      icon: <Globe className="w-6 h-6" strokeWidth={1} />
     },
     {
       title: "Censorship Check",
       description: "Check if a website is blocked in some countries",
-      icon: <Lock className="w-6 h-6" strokeWidth={1.5} />
+      icon: <Lock className="w-6 h-6" strokeWidth={1} />
     },
     {
       title: "Whois Search",
       description: "Search for domain/IP registration information",
-      icon: <Search className="w-6 h-6" strokeWidth={1.5} />
+      icon: <Search className="w-6 h-6" strokeWidth={1} />
     },
     {
       title: "MAC Lookup",
       description: "Query information of a physical address",
-      icon: <Network className="w-6 h-6" strokeWidth={1.5} />
+      icon: <Network className="w-6 h-6" strokeWidth={1} />
     },
     {
       title: "Browser Information",
       description: "Check browser information and fingerprint",
-      icon: <Globe className="w-6 h-6" strokeWidth={1.5} />
+      icon: <Globe className="w-6 h-6" strokeWidth={1} />
     },
     {
       title: "Security Checklist",
       description: "Guide to securing your digital life",
-      icon: <Shield className="w-6 h-6" strokeWidth={1.5} />
+      icon: <Shield className="w-6 h-6" strokeWidth={1} />
     },
     {
       title: "Invisibility Test",
       description: "Check if you are using a proxy or VPN",
-      icon: <Eye className="w-6 h-6" strokeWidth={1.5} />
+      icon: <Eye className="w-6 h-6" strokeWidth={1} />
     }
   ];
 

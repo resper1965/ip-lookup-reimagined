@@ -42,7 +42,7 @@ const IPCard = ({ ip, location, isp, type, country, region, city }: IPCardProps)
     <Card className="w-full max-w-lg mx-auto bg-white/10 backdrop-blur-md border border-white/20 shadow-2xl hover:bg-white/15 transition-all duration-500 hover:scale-105">
       <CardHeader className="text-center pb-4">
         <div className="mx-auto w-20 h-20 bg-gradient-to-br from-blue-400 via-purple-500 to-pink-500 rounded-full flex items-center justify-center mb-4 shadow-lg">
-          <Globe className="w-10 h-10 text-white" />
+          <Globe className="w-10 h-10 text-white" strokeWidth={1} />
         </div>
         <CardTitle className="text-2xl font-bold text-white">Seu Endereço IP</CardTitle>
         <p className="text-gray-300 text-sm">Informações da sua conexão</p>
@@ -60,9 +60,9 @@ const IPCard = ({ ip, location, isp, type, country, region, city }: IPCardProps)
               className="text-white hover:bg-white/10"
             >
               {copied ? (
-                <CheckCircle className="w-4 h-4 text-green-400" />
+                <CheckCircle className="w-4 h-4 text-green-400" strokeWidth={1} />
               ) : (
-                <Copy className="w-4 h-4" />
+                <Copy className="w-4 h-4" strokeWidth={1} />
               )}
             </Button>
           </div>
@@ -73,7 +73,7 @@ const IPCard = ({ ip, location, isp, type, country, region, city }: IPCardProps)
         
         <div className="space-y-4 pt-4">
           <div className="flex items-center space-x-3 text-gray-200 bg-white/5 p-3 rounded-lg">
-            <MapPin className="w-5 h-5 text-blue-400 flex-shrink-0" />
+            <MapPin className="w-5 h-5 text-blue-400 flex-shrink-0" strokeWidth={1} />
             <div className="flex-1">
               <div className="text-sm font-medium">{location}</div>
               {city && region && (
@@ -83,7 +83,7 @@ const IPCard = ({ ip, location, isp, type, country, region, city }: IPCardProps)
           </div>
           
           <div className="flex items-center space-x-3 text-gray-200 bg-white/5 p-3 rounded-lg">
-            <Wifi className="w-5 h-5 text-purple-400 flex-shrink-0" />
+            <Wifi className="w-5 h-5 text-purple-400 flex-shrink-0" strokeWidth={1} />
             <div className="flex-1">
               <div className="text-sm font-medium">Provedor</div>
               <div className="text-xs text-gray-400">{isp}</div>
@@ -91,7 +91,7 @@ const IPCard = ({ ip, location, isp, type, country, region, city }: IPCardProps)
           </div>
           
           <div className="flex items-center space-x-3 text-gray-200 bg-white/5 p-3 rounded-lg">
-            <Shield className="w-5 h-5 text-green-400 flex-shrink-0" />
+            <Shield className="w-5 h-5 text-green-400 flex-shrink-0" strokeWidth={1} />
             <div className="flex-1">
               <div className="text-sm font-medium">Status de Segurança</div>
               <div className="text-xs text-gray-400">Conexão Protegida</div>

@@ -25,7 +25,7 @@ const NetworkStats = ({ stats }: NetworkStatsProps) => {
       <Card className="bg-white/5 backdrop-blur-sm border border-white/10">
         <CardHeader>
           <CardTitle className="text-white flex items-center gap-2">
-            <Gauge className="w-6 h-6 text-gray-300" strokeWidth={1.5} />
+            <Gauge className="w-6 h-6 text-gray-300" strokeWidth={1} />
             Estatísticas de Rede
           </CardTitle>
         </CardHeader>
@@ -66,7 +66,7 @@ const NetworkStats = ({ stats }: NetworkStatsProps) => {
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4 pt-4 border-t border-white/10">
             <div className="flex items-center space-x-3 text-gray-200">
-              <Wifi className="w-5 h-5 text-gray-300" strokeWidth={1.5} />
+              <Wifi className="w-5 h-5 text-gray-300" strokeWidth={1} />
               <div>
                 <div className="text-sm">Tipo de Conexão</div>
                 <div className="text-xs text-gray-400">Banda Larga</div>
@@ -74,7 +74,7 @@ const NetworkStats = ({ stats }: NetworkStatsProps) => {
             </div>
 
             <div className="flex items-center space-x-3 text-gray-200">
-              <Signal className="w-5 h-5 text-gray-300" strokeWidth={1.5} />
+              <Signal className="w-5 h-5 text-gray-300" strokeWidth={1} />
               <div>
                 <div className="text-sm">Qualidade</div>
                 <div className="text-xs text-gray-400">Excelente</div>
@@ -82,7 +82,7 @@ const NetworkStats = ({ stats }: NetworkStatsProps) => {
             </div>
 
             <div className="flex items-center space-x-3 text-gray-200">
-              <Router className="w-5 h-5 text-gray-300" strokeWidth={1.5} />
+              <Router className="w-5 h-5 text-gray-300" strokeWidth={1} />
               <div>
                 <div className="text-sm">Protocolo</div>
                 <div className="text-xs text-gray-400">IPv4 / IPv6</div>

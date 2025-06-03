@@ -23,37 +23,37 @@ interface InfoGridProps {
 const InfoGrid = ({ networkData }: InfoGridProps) => {
   const infoItems: InfoItem[] = [
     {
-      icon: <Clock className="w-6 h-6" strokeWidth={1.5} />,
+      icon: <Clock className="w-6 h-6" strokeWidth={1} />,
       title: "Fuso Horário",
       value: networkData?.timezone || "UTC-3",
       description: "Brasília, São Paulo"
     },
     {
-      icon: <Zap className="w-6 h-6" strokeWidth={1.5} />,
+      icon: <Zap className="w-6 h-6" strokeWidth={1} />,
       title: "Velocidade",
       value: networkData?.speed || "Calculando...",
       description: "Download estimado"
     },
     {
-      icon: <Eye className="w-6 h-6" strokeWidth={1.5} />,
+      icon: <Eye className="w-6 h-6" strokeWidth={1} />,
       title: "Privacidade",
       value: networkData?.privacy || "Médio",
       description: "Nível de exposição"
     },
     {
-      icon: <Lock className="w-6 h-6" strokeWidth={1.5} />,
+      icon: <Lock className="w-6 h-6" strokeWidth={1} />,
       title: "Segurança",
       value: networkData?.security || "Alta",
       description: "Protocolo HTTPS"
     },
     {
-      icon: <Server className="w-6 h-6" strokeWidth={1.5} />,
+      icon: <Server className="w-6 h-6" strokeWidth={1} />,
       title: "Servidor",
       value: networkData?.server || "Detectando...",
       description: "Servidor mais próximo"
     },
     {
-      icon: <Activity className="w-6 h-6" strokeWidth={1.5} />,
+      icon: <Activity className="w-6 h-6" strokeWidth={1} />,
       title: "Latência",
       value: networkData?.latency || "Medindo...",
       description: "Tempo de resposta"
