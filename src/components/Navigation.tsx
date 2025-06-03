@@ -57,12 +57,26 @@ const Navigation = ({ activeTab, onTabChange, onSettingsClick }: NavigationProps
     <nav className="bg-white/5 backdrop-blur-sm border-b border-white/10 sticky top-0 z-50 font-montserrat">
       <div className="container mx-auto px-4">
         {/* Desktop Navigation */}
-        <div className="hidden lg:flex items-center justify-between py-3">
-          <div className="flex items-center">
-            <Logo />
+        <div className="hidden lg:block">
+          {/* Logo and Settings Row */}
+          <div className="flex items-center justify-between py-3">
+            <div className="flex items-center">
+              <Logo />
+            </div>
+            
+            <div className="flex items-center space-x-3">
+              <LanguageSelector />
+              <button
+                onClick={onSettingsClick}
+                className="flex items-center space-x-2 px-3 py-2 rounded-lg text-gray-300 hover:bg-white/10 hover:text-white transition-all duration-200"
+              >
+                <Settings className="w-4 h-4" strokeWidth={1} />
+              </button>
+            </div>
           </div>
           
-          <div className="flex items-center justify-center space-x-1 flex-1">
+          {/* Menu Row */}
+          <div className="flex items-center justify-center space-x-1 pb-3">
             {tabs.map(tab => {
               const Icon = tab.icon;
               return (
@@ -80,16 +94,6 @@ const Navigation = ({ activeTab, onTabChange, onSettingsClick }: NavigationProps
                 </button>
               );
             })}
-          </div>
-          
-          <div className="flex items-center space-x-3">
-            <LanguageSelector />
-            <button
-              onClick={onSettingsClick}
-              className="flex items-center space-x-2 px-3 py-2 rounded-lg text-gray-300 hover:bg-white/10 hover:text-white transition-all duration-200"
-            >
-              <Settings className="w-4 h-4" strokeWidth={1} />
-            </button>
           </div>
         </div>
 
