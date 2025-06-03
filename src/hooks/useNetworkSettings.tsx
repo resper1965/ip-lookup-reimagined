@@ -17,6 +17,9 @@ const defaultSettings: NetworkSettings = {
     'https://ncommand-lite.ionichealthusa.com'
   ],
   stunServers: [
+    'stun:stun.ionichealthusa.com:5349',
+    'stun:stun.ionichealth.eu:5349',
+    'stun:stun.ionic.health:5349',
     'stun:stun.l.google.com:19302',
     'stun:stun1.l.google.com:19302',
     'stun:stun2.l.google.com:19302',
@@ -24,10 +27,7 @@ const defaultSettings: NetworkSettings = {
     'stun:stun4.l.google.com:19302',
     'stun:stun.cloudflare.com:3478',
     'stun:stun.nextcloud.com:443',
-    'stun:relay.webwormhole.io:3478',
-    'stun:stun.ionichealthusa.com:5349',
-    'stun:stun.ionichealth.eu:5349',
-    'stun:stun.ionic.health:5349'
+    'stun:relay.webwormhole.io:3478'
   ]
 };
 
