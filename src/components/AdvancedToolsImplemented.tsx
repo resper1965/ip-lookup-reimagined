@@ -1,4 +1,3 @@
-
 import { useState } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -49,11 +48,11 @@ const AdvancedToolsImplemented = () => {
   
   // Global Latency Test
   const [pingResults, setPingResults] = useState<PingResult[]>([
+    { location: 'Cleveland, USA', ip: '162.255.119.15', latency: 135, status: 'success' },
+    { location: 'Coimbra, PT', ip: '193.136.28.12', latency: 165, status: 'success' },
+    { location: 'São José dos Campos, BR', ip: '189.126.45.78', latency: 25, status: 'success' },
     { location: 'São Paulo, BR', ip: '191.241.242.89', latency: 15, status: 'success' },
-    { location: 'Rio de Janeiro, BR', ip: '177.43.176.12', latency: 28, status: 'success' },
-    { location: 'Miami, USA', ip: '104.21.12.45', latency: 142, status: 'success' },
-    { location: 'London, UK', ip: '172.67.198.6', latency: 187, status: 'success' },
-    { location: 'Tokyo, JP', ip: '104.16.249.249', latency: 245, status: 'success' }
+    { location: 'Rio de Janeiro, BR', ip: '177.43.176.12', latency: 28, status: 'success' }
   ]);
 
   // Whois Search
